@@ -1,0 +1,23 @@
+.navbar-container{
+    background-color: rgb(62, 62, 170);
+    height: 7vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar-option{
+    margin: 10px;
+    color: white;
+    font-size: 24px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-variant: small-caps;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 5px;
+
+    &:hover{
+        background-color: rgb(82, 82, 173) ;
+        cursor: pointer;
+    }
+}
