@@ -4,5 +4,5 @@ export interface Appointment{
     administratorSurname : string,
     dateAndTime : Date,
     duration : number,
-    isFree : boolean,
+    free : boolean,
 }
