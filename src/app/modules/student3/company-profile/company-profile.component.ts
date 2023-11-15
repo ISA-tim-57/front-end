@@ -22,10 +22,12 @@ export class CompanyProfileComponent implements OnInit{
   showEquipment : boolean = false;
   showAppointment : boolean = false;
 
+  companyId : number = 1;
+
   
 
   ngOnInit() : void{
-    this.service.getCompany(1).subscribe({
+    this.service.getCompany(this.companyId).subscribe({
       next: (result) =>{
         this.company = result;
       }

@@ -27,4 +27,8 @@ export class Student3Service {
   getAppointmentsForCompany(copmanyId : number): Observable<Appointment[]>{
     return this.http.get<Appointment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/appointments');
   }
+
+  addEquipmentToCompany(equipment : Equipment): Observable<Equipment>{
+    return this.http.post<Equipment>('http://localhost:8080/api/equipments', equipment);
+  }
 }

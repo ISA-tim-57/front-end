@@ -4,6 +4,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { EquipmentsComponent } from './equipments/equipments.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
   ],
   exports : [
   ]
