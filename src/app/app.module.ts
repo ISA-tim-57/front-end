@@ -24,7 +24,6 @@ import { Student3Module } from './modules/student3/student3.module';
     AppRoutingModule,
     LayoutModule,
     FormsModule,
-    Student3Module
   ],
   providers: [],
   bootstrap: [AppComponent]

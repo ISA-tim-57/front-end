@@ -31,4 +31,12 @@ export class Student3Service {
   addEquipmentToCompany(equipment : Equipment): Observable<Equipment>{
     return this.http.post<Equipment>('http://localhost:8080/api/equipments', equipment);
   }
+
+  addAppointmentToCompany(appointment : Appointment) : Observable<Appointment>{
+    return this.http.post<Appointment>('http://localhost:8080/api/appointments', appointment);
+  }
+
+  updateCompany(id : number, updatedCompany : Company) : Observable<Company>{
+    return this.http.put<Company>('http://localhost:8080/api/companies/' + id, updatedCompany);
+  }
 }
