@@ -1,5 +1,75 @@
 <div class="main-container">
-    <div class="sub-container">
+    <div class="menu-buttons">
+        <button (click)="selectAdmin()">Administrator profile</button>
+        <button (click)="selectCompany()">Company profile</button>
+    </div>
+    <div *ngIf="adminSelected" class="admins-form-container">
+        <form [formGroup]="adminForm">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" formControlName = "name"/></td>
+                </tr>
+                <tr>
+                    <td>Surname:</td>
+                    <td><input type="text" formControlName = "surname"/></td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td><input type="tel" formControlName = "phone"/></td>
+                </tr>
+            </table>
+            <table>
+                <fieldset>
+                    <legend>Address</legend>
+                    <tr>
+                        <td>
+                            <label>Country:</label>
+                        </td>
+                        <td>
+                            <input type="text" formControlName = "country"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>City:</label>
+                        </td>
+                        <td>
+                            <input type="text" formControlName = "city"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Street:</label>
+                        </td>
+                        <td>
+                            <input type="text" formControlName = "street"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Number:</label>
+                        </td>
+                        <td>
+                            <input type="text" formControlName = "number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Zip Code:</label>
+                        </td>
+                        <td>
+                            <input type="text" formControlName = "zipCode"/>
+                        </td>
+                    </tr>
+                </fieldset>   
+            </table>
+            <button (click) = "editAdmin()" *ngIf="!isAdminFormEditable">Edit</button>
+            <button *ngIf="isAdminFormEditable" (click) = "updateAdmin()">Save</button>       
+        </form>
+
+    </div>
+    <div class="sub-container" *ngIf="companySelected">
         <div class="form-container">
             <form [formGroup]="companyForm">
                 <table>
@@ -113,7 +183,7 @@
             
         </div>
     </div>
-    <div class="admins-container">
+    <div class="admins-container" *ngIf="companySelected">
         <h1>All admins</h1>
         <div>
             <table>

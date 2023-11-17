@@ -4,6 +4,7 @@ import { Company, createEmptyCompany } from '../model/company.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Address } from '../model/address.model';
 import { Appointment, createEmptyAppointment } from '../model/appointment.model';
+import { User, createEmptyUser } from '../model/user.model';
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -17,8 +18,14 @@ export class CompanyAdministratorProfileComponent {
   company : Company = createEmptyCompany();
   appointments : Appointment[] = [];
 
+  admin : User = createEmptyUser();
+
   isFormeditable : boolean = false;
+  isAdminFormEditable : boolean = false;
   companyId : number = 1;
+
+  companySelected : boolean = false;
+  adminSelected : boolean = true;
 
   companyForm = new FormGroup({
     name: new FormControl(this.company.name,[Validators.required]),
@@ -36,7 +43,19 @@ export class CompanyAdministratorProfileComponent {
     duration : new FormControl(0,[Validators.required])
   })
 
+  adminForm = new FormGroup({
+    name : new FormControl('',[Validators.required]),
+    surname : new FormControl('',[Validators.required]),
+    phone : new FormControl('',[Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    street: new FormControl('', [Validators.required]),
+    number: new FormControl('', [Validators.required]),
+    zipCode: new FormControl('', [Validators.required]),
+  });
+
   ngOnInit() : void{
+    this.loadAdmin();
     this.loadCompany();
   }
 
@@ -98,6 +117,28 @@ export class CompanyAdministratorProfileComponent {
     })
   }
 
+  loadAdmin(){
+    this.service.getUser(1).subscribe({
+      next : (result) =>{
+        this.admin = result;
+
+        this.adminForm = new FormGroup({
+          name : new FormControl(result.name,[Validators.required]),
+          surname : new FormControl(result.surname,[Validators.required]),
+          phone : new FormControl(result.phone,[Validators.required]),
+          country: new FormControl(result.address.country, [Validators.required]),
+          city: new FormControl(result.address.city, [Validators.required]),
+          street: new FormControl(result.address.street, [Validators.required]),
+          number: new FormControl(result.address.number, [Validators.required]),
+          zipCode: new FormControl(result.address.zipCode, [Validators.required]),
+        });
+
+        this.adminForm.disable();
+        
+      }
+    })
+  }
+
   loadCompany(){
     this.service.getCompany(this.companyId).subscribe({
       next: (result) =>{
@@ -141,12 +182,56 @@ export class CompanyAdministratorProfileComponent {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     
-
-    
-    
-
     return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+  }
 
+  selectAdmin(){
+    this.companySelected = false;
+    this.adminSelected = true;
+  }
+
+  selectCompany(){
+    this.adminSelected = false;
+    this.companySelected = true;
+  }
+
+  editAdmin(){
+    this.isAdminFormEditable= true;
+    this.adminForm.enable();
+
+  }
+
+  updateAdmin(){
+    this.isAdminFormEditable = false;
+    this.adminForm.disable();
+
+    let updatedAddress : Address = {
+      id : this.admin.address.id,
+      country : this.adminForm.value.country || this.admin.address.country,
+      city : this.adminForm.value.city || this.admin.address.city,
+      street : this.adminForm.value.street || this.admin.address.street,
+      number : this.adminForm.value.number || this.admin.address.number,
+      zipCode : this.adminForm.value.zipCode || this.admin.address.zipCode
+    };
+
+    let updatedCompanyAdmin : User = {
+      id : this.admin.id,
+      name : this.adminForm.value.name || this.admin.name,
+      surname : this.adminForm.value.surname || this.admin.surname,
+      email : this.admin.email,
+      phone : this.adminForm.value.phone || this.admin.phone,
+      profession : this.admin.profession,
+      username : this.admin.username,
+      password : this.admin.password,
+      companyInfo : this.admin.companyInfo,
+      address : updatedAddress
+    }
+
+    this.service.updateCompanyAdmin(this.admin.id,updatedCompanyAdmin).subscribe({
+      next : () =>{
+        this.loadAdmin();
+      }
+    })
   }
 
 }

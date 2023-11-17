@@ -1,12 +1,39 @@
 .main-container{
     display: flex;
     flex-direction: column;
+    background-color: gray;
+}
+
+.menu-buttons{
+     background-color: darkblue;
+}
+
+.menu-buttons button{
+    font-family: sans-serif;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.admins-form-container{
+    width: 20%;
+    padding: 20px;
+    margin: 2%;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
+.admins-form-container input{
+    border-radius: 5px;
+    border: 0.5px solid black;
+    padding: 5px;
+    width: 100%;
 }
 
 .sub-container{
     display: flex;
     flex-direction: row;
     width: 100%;
+    
 }
 
 .form-container{
