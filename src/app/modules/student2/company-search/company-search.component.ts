@@ -18,6 +18,7 @@ export class CompanySearchComponent {
   companies: Company[] = [];
   filteredCompanies: Company[] = [];
   searchTerm: string = '';
+  selectedRating: number = 5;
   
   ngOnInit(): void {
     this.service.getAllCompanies().subscribe({
@@ -30,10 +31,10 @@ export class CompanySearchComponent {
 
   search(): void {
     this.filteredCompanies = this.companies.filter((company) =>
-     company.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+     (company.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
      company.address.city.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-     company.address.street.toLowerCase().includes(this.searchTerm.toLowerCase())
-    )
+     company.address.street.toLowerCase().includes(this.searchTerm.toLowerCase())) &&
+     (!this.selectedRating || company.rating == this.selectedRating));
   }
 
 
