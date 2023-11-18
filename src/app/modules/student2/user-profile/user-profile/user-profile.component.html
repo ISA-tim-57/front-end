@@ -1,1 +1,38 @@
-<p>user-profile works!</p>
+<div class="main-container">
+    <div class="center-container">
+        <div>
+            <h1>{{user!.name}}</h1>
+            <h2>{{user.addressDTO!.street}}</h2>
+            <h2>{{user.addressDTO!.city}}</h2>
+            <h2></h2>
+
+            <form >
+                <label for="username">Username:</label>
+                <input type="text" placeholder="Username" formControlName="usernameEdit" />
+                <br />
+                <label for="name">Name:</label>
+                <input type="text" placeholder="Name" formControlName="nameEdit" />
+                <br />
+                <label for="surname">Surname:</label>
+                <input type="text" placeholder="Surname" formControlName="surnameEdit" />
+                <br />
+                <label for="email">Email:</label>
+                <input type="text" placeholder="Email" formControlName="emailEdit"/>
+                <br />
+                <label for="phone">Phone:</label>
+                <input type="text" placeholder="Phone" formControlName="phoneEdit" />
+                <br />
+                <label for="profession">Profession:</label>
+                <input type="text" placeholder="Profession" formControlName="professionEdit" />
+                <br />
+                <label for="companyInfo">Company info:</label>
+                <input type="text" placeholder="CompanyInfo" formControlName="companyInfoEdit" />
+                <br />
+                <button type="submit">Edit</button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

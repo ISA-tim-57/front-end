@@ -1,0 +1,43 @@
+.main-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 93vh;
+}
+
+.left-container{
+    display: flex;
+    flex-direction: column;
+    background-color:   white;
+    width: 20%;
+    align-items: center;
+}
+
+.right-container{
+    display: flex;
+    flex-direction: column;
+    background-color: lightblue;
+    width: 80%;
+}
+
+.center-container{
+    display: flex;
+    flex-direction: column;
+    background-color: aquamarine;
+    width: 40%;
+    align-items: center;
+}
+
+.buttons-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.single-buton-container{
+    margin: 10px;
+}
+
+.single-buton-container button{
+    height: 30px;
+    width: 150px;
+}
