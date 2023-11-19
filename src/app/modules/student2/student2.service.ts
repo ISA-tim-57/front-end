@@ -22,4 +22,5 @@ export class Student2Service {
   getAllCompanies(): Observable<Company[]>{
     return this.http.get<Company[]>('http://localhost:8080/api/companies/all');
   }
+
 }
