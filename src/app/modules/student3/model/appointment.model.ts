@@ -4,5 +4,16 @@ export interface Appointment{
     administratorSurname : string,
     dateAndTime : Date,
     duration : number,
-    isFree : boolean,
+    free : boolean,
+    companyId : number,
 }
+
+export const createEmptyAppointment = (): Appointment=> ({
+    id: 0,
+    administratorName : '',
+    administratorSurname : '',
+    dateAndTime : new Date(),
+    duration : 0,
+    free : true,
+    companyId : 0
+  });

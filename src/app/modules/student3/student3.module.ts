@@ -5,6 +5,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { EquipmentsComponent } from './equipments/equipments.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
 
 
 
@@ -12,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     CompanyProfileComponent,
     AppointmentsComponent,
-    EquipmentsComponent
+    EquipmentsComponent,
+    CompanyAdministratorProfileComponent
   ],
   imports: [
     CommonModule,

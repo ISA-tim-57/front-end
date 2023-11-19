@@ -5,13 +5,15 @@ import { CompanyProfileComponent } from './modules/student3/company-profile/comp
 import {UserFormComponent}  from './modules/student1/user-form/user-form.component';
 import { CompanySearchComponent } from './modules/student1/company-search/company-search.component';
 import { EquipmentSearchComponent } from './modules/student1/equipment-search/equipment-search.component';
+import { CompanyAdministratorProfileComponent } from './modules/student3/company-administrator-profile/company-administrator-profile.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'companyprofile', component: CompanyProfileComponent},
   {path: 'register',component: UserFormComponent },
   {path: 'companysearch',component: CompanySearchComponent },
-  {path: 'equipmentsearch',component: EquipmentSearchComponent }
+  {path: 'equipmentsearch',component: EquipmentSearchComponent },
+  {path: 'administratorprofile', component: CompanyAdministratorProfileComponent}
 ];
 
 @NgModule({
