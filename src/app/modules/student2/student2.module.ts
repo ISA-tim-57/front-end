@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
-import { CompanySearchComponent } from './company-search/company-search.component';
+import { CompanySearchComponent } from './company-search2/company-search.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
