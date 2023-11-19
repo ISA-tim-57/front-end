@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "medicines-distribution:build:production"
+              "buildTarget": "medicines-distribution:build:production"
             },
             "development": {
-              "browserTarget": "medicines-distribution:build:development"
+              "buildTarget": "medicines-distribution:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "medicines-distribution:build"
+            "buildTarget": "medicines-distribution:build"
           }
         },
         "test": {
@@ -94,5 +94,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
