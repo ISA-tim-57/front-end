@@ -1,0 +1,35 @@
+<div>
+    <div style="margin-bottom: 20px;">
+        <label>Name:</label>
+        <input type="text" [(ngModel)]="searchName">
+        <label>City:</label>
+        <input type="text" [(ngModel)]="searchCity">
+        <button (click)="searchCompanies()">Search</button>
+      </div>
+   
+   
+    <table>
+                
+        
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>City</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let c of companies">
+                <td>{{c.name}}</td>
+                <td>{{c.rating}}</td>
+                <td>{{c.address.city}}</td>
+            </tr>
+
+        </tbody>
+
+
+
+    </table>
+</div>

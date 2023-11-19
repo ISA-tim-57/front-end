@@ -1,0 +1,62 @@
+<form [formGroup]="userForm" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div style="display: flex; flex-direction: column; width: 300px;">
+      <mat-form-field>
+        <input matInput formControlName="email" type="email" required placeholder="Email">
+      </mat-form-field>
+  
+      <mat-form-field>        
+        <input matInput formControlName="password" type="password" required placeholder="Password">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="passwordConfirmation" type="password" required placeholder="Confirm Password" (input)="validatePassword()">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="username" type="text" required placeholder="Username">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="name" type="text" required placeholder="Name">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="surname" type="text" required placeholder="Surname">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="phone" type="tel" required placeholder="Phone">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="profession" type="text" required placeholder="Proffesion">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <textarea matInput formControlName="companyInfo" required placeholder="Company info"></textarea>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="country" type="text" required placeholder="Country">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="city" type="text" required placeholder="City">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="street" type="text" required placeholder="Street">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="number" type="text" required placeholder="Number">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput formControlName="zipCode" type="text" required placeholder="Zipcode">
+      </mat-form-field>
+  
+      <button mat-raised-button type="submit" [disabled]="userForm.invalid || passwordsNotMatching" (click)="addUser()">Register</button>
+    </div>
+  </form>
+  
