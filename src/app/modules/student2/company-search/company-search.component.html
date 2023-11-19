@@ -1,0 +1,27 @@
+<div>
+    
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" (input)="search()" id="search">
+    <select [(ngModel)]="selectedRating" (change)="search()">
+        <option value="">Sve ocene</option>
+        <option *ngFor="let rating of [1, 2, 3, 4, 5]" [value]="rating">{{rating}}</option>
+    </select>
+    <table>
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Ulica</th>
+                <th>Grad</th>
+                <th>Ocena</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let company of filteredCompanies">
+                <td>{{company.name}}</td>
+                <td>{{company.address.street}}</td>
+                <td>{{company.address.city}}</td>
+                <td>{{company.rating}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

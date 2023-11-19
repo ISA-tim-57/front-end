@@ -1,0 +1,77 @@
+<div class="main-container">
+    <div class="center-container">
+        <div>
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td>{{user!.name}}</td>
+                </tr>
+                <tr>
+                    <td>Surname: </td>
+                    <td>{{user!.surname}}</td>
+                </tr>
+                <tr>
+                    <td>Username: </td>
+                    <td>{{user!.username}}</td>
+                </tr>
+                <tr>
+                    <td>Street: </td>
+                    <td>{{user.addressDTO!.street}}</td>
+                </tr>
+                <tr>
+                    <td>City: </td>
+                    <td>{{user.addressDTO!.city}}</td>
+                </tr>
+                <tr>
+                    <td>Country: </td>
+                    <td>{{user.addressDTO!.country}}</td>
+                </tr>
+                <tr>
+                    <td>Phone: </td>
+                    <td>{{user.phone}}</td>
+                </tr>
+                <tr>
+                    <td>Profession: </td>
+                    <td>{{user.profession}}</td>
+                </tr>
+                <tr>
+                    <td>Company info: </td>
+                    <td>{{user.companyInfo}}</td>
+                </tr>
+            </table>
+            <h1></h1>
+            <h2></h2>
+            <h2></h2>
+            <h2></h2>
+        </div>
+    </div>
+
+    <div class="center-container">
+        <form [formGroup] = "userForm">
+            <label for="username">Username:</label>
+            <input type="text" placeholder="Username" formControlName="usernameEdit" />
+            <br />
+            <label for="name">Name:</label>
+            <input type="text" placeholder="Name" formControlName="nameEdit" />
+            <br />
+            <label for="surname">Surname:</label>
+            <input type="text" placeholder="Surname" formControlName="surnameEdit" />
+            <br />
+            <label for="email">Email:</label>
+            <input type="text" placeholder="Email" formControlName="emailEdit"/>
+            <br />
+            <label for="phone">Phone:</label>
+            <input type="text" placeholder="Phone" formControlName="phoneEdit" />
+            <br />
+            <label for="profession">Profession:</label>
+            <input type="text" placeholder="Profession" formControlName="professionEdit" />
+            <br />
+            <label for="companyInfo">Company info:</label>
+            <input type="text" placeholder="CompanyInfo" formControlName="companyInfoEdit" />
+            <br />
+            <button type="submit">Edit</button>
+
+        </form>
+    </div>
+
+</div>
