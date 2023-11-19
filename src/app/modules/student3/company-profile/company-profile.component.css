@@ -8,9 +8,19 @@
 .left-container{
     display: flex;
     flex-direction: column;
-    background-color:   white;
+    background-color:   rgb(58, 58, 119);
     width: 20%;
     align-items: center;
+}
+
+.left-container h1,h2,h3{
+    color: white;
+    font-family: sans-serif;
+}
+
+.left-container h1{
+    font-variant: small-caps;
+    
 }
 
 .right-container{
@@ -30,6 +40,10 @@
 }
 
 .single-buton-container button{
-    height: 30px;
-    width: 150px;
+    height: 2em;
+    width: 100%;
+    border-radius: 10px;
+    border: 0px;
+    font-size: 18px;
+    padding: 10px;
 }

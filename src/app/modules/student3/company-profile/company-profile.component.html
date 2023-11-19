@@ -2,8 +2,10 @@
     <div class="left-container">
       <div>
         <h1>{{company!.name}}</h1>
-        <h2>{{company.address!.street}} {{company.address!.number}}</h2>
-        <h2>{{company.address!.zipCode}} {{company.address!.city}}, {{company.address!.country}}</h2>
+        <h3>{{company.address!.street}} {{company.address!.number}}</h3>
+        <h3>{{company.address!.zipCode}} {{company.address!.city}}, {{company.address!.country}}</h3>
+        <h2>Rank: {{company.rating}}</h2>
+        
       </div>
       <div class="buttons-container">
         <div class="single-buton-container">
@@ -18,4 +20,5 @@
       <app-equipments *ngIf="showEquipment" [selectedCompanyId] = companyId ></app-equipments>
       <app-appointments *ngIf="showAppointment"></app-appointments>
     </div>
+    
   </div>

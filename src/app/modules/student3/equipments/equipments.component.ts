@@ -17,6 +17,8 @@ export class EquipmentsComponent {
 
   equipments : Equipment[] = [];
 
+  isFormEnabled : boolean = false;
+
   
 
   equipmentForm = new FormGroup({
@@ -26,7 +28,11 @@ export class EquipmentsComponent {
   });
 
   ngOnInit(): void{
-    this.service.getEquipmentsForCompany(1).subscribe({
+    this.loadEquipments();
+  }
+
+  loadEquipments(){
+    this.service.getEquipmentsForCompany(this.selectedCompanyId).subscribe({
       next : (result) =>{
         this.equipments = result;
       }
@@ -48,10 +54,16 @@ export class EquipmentsComponent {
           description: new FormControl('', [Validators.required]),
           price: new FormControl(0),
         });
+        this.isFormEnabled = false;
+        this.loadEquipments();
       }
     });
-    
-    
   }
+
+  newEquipmentClick(){
+    this.isFormEnabled = true;
+  }
+
+  
 
 }

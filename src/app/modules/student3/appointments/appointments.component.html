@@ -1,5 +1,21 @@
 <div>
-    <div *ngFor = "let appointment of appointments">
-        <div>{{appointment.dateAndTime}}</div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Appointment</th>
+                    <th>Duration (min)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody *ngFor = "let appointment of appointments">
+                <tr>
+                    <td>{{appointment.dateAndTime}}</td>
+                    <td>{{appointment.duration}}</td>
+                    <td>{{appointment.free ? "free" : "reserved"}}</td>
+                </tr>
+            </tbody>
+        </table>
+        
     </div>
 </div>
