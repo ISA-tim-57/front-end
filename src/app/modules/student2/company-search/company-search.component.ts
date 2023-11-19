@@ -18,7 +18,7 @@ export class CompanySearchComponent {
   companies: Company[] = [];
   filteredCompanies: Company[] = [];
   searchTerm: string = '';
-  selectedRating: number = 5;
+  selectedRating: number = 0;
   
   ngOnInit(): void {
     this.service.getAllCompanies().subscribe({
