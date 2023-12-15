@@ -10,10 +10,12 @@ import {UserFormComponent}  from './modules/student1/user-form/user-form.compone
 import { CompanySearchComponent as cs1} from './modules/student1/company-search/company-search.component';
 import { EquipmentSearchComponent } from './modules/student1/equipment-search/equipment-search.component';
 import { CompanyAdministratorProfileComponent } from './modules/student3/company-administrator-profile/company-administrator-profile.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'companyprofile', component: CompanyProfileComponent},
   {path: 'userProfile', component: UserProfileComponent},
   {path: 'companySearch', component: cs2},

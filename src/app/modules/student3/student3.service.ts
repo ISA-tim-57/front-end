@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Company } from './model/company.model';
 import { Equipment } from './model/equipment.model';
@@ -18,7 +18,13 @@ export class Student3Service {
   }
 
   getCompany(id : number) : Observable<Company>{
-    return this.http.get<Company>('http://localhost:8080/api/companies/'+ id);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.get<Company>('http://localhost:8080/api/companies/'+ id, options);
   }
 
   getEquipmentsForCompany(copmanyId : number): Observable<Equipment[]>{
