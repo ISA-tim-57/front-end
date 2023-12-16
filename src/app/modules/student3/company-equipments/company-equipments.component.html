@@ -1,0 +1,75 @@
+<div class="main-container">
+    <div class="search-container">
+        <form [formGroup]="searchForm">
+            <input type="text" placeholder="Search..." formControlName = "search"/>
+        </form>
+        
+    </div>
+    <button
+      class="new-equipment"
+      (click)="newEquipmentClick()"
+      *ngIf="!isFormEnabled && !isUpdateEnabled"
+    >
+      + New equipment
+    </button>
+  
+    <form [formGroup]="equipmentForm" class="add-form" *ngIf="isFormEnabled">
+      <div class="add-equipment-form">
+        <input type="text" placeholder="Name" formControlName="name" />
+        <input
+          type="text"
+          placeholder="Description"
+          formControlName="description"
+        />
+        <input type="number" placeholder="Price" formControlName="price" />
+        <button type="submit" (click)="addEquipment()" [disabled]="equipmentForm.invalid">Add</button>
+      </div>
+    </form>
+
+    <form [formGroup]="updateEquipmentForm" class="update-equipment-form" *ngIf="isUpdateEnabled">
+        <div class="add-equipment-form">
+            <div class="update-form-row">
+                <label>Name: </label>
+                <input type="text" placeholder="Name" formControlName="newName" />
+            </div>
+            <div class="update-form-row">
+                <label>Description: </label>
+                <input
+                    type="text"
+                    placeholder="Description"
+                    formControlName="newDescription"
+                />
+            </div>
+            <div class="update-form-row">
+                <label>Price: </label>
+                <input type="number" placeholder="Price" formControlName="newPrice" />
+            </div>
+          <button type="submit" (click)="saveEquipment()" [disabled]="updateEquipmentForm.invalid">Save</button>
+          <button type="submit" (click)="dismiss()">Dismiss</button>
+        </div>
+      </form>
+  
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price ($)</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let equipment of equipments">
+          <tr>
+            <td>{{ equipment.name }}</td>
+            <td>{{ equipment.description }}</td>
+            <td>{{ equipment.price }}</td>
+            <td>
+                <button (click)="updateEquipment(equipment)">Edit</button>
+                <button (click)="deleteEquipment(equipment.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

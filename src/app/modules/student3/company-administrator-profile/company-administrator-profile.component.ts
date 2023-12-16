@@ -26,6 +26,9 @@ export class CompanyAdministratorProfileComponent {
 
   companySelected : boolean = false;
   adminSelected : boolean = true;
+  equipmentSelected : boolean = false;
+
+  isAppointmentCreateErrorVisible : boolean = false;
 
   companyForm = new FormGroup({
     name: new FormControl(this.company.name,[Validators.required]),
@@ -105,16 +108,62 @@ export class CompanyAdministratorProfileComponent {
     appointment.free = true;
     appointment.dateAndTime = new Date(`${this.appointmentForm.value.selectedDate}T${this.appointmentForm.value.selectedTime}`);
 
-    this.service.addAppointmentToCompany(appointment).subscribe({
-      next : ()=>{
-        this.loadAppointments();
-        this.appointmentForm = new FormGroup({
-          selectedDate: new FormControl('',[Validators.required]),
-          selectedTime: new FormControl('',[Validators.required]),
-          duration : new FormControl(0,[Validators.required])
-        })
+    let workingHoursStart = new Date(`1970-01-01T${this.company.workingHoursStart}`);
+    let workingHoursEnd = new Date(`1970-01-01T${this.company.workingHoursEnd}`);
+
+    if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
+      this.isAppointmentCreateErrorVisible = false;
+      this.service.addAppointmentToCompany(appointment).subscribe({
+        next : ()=>{
+          this.loadAppointments();
+          this.cleanAppointmentform();
+        }
+      })
+    }
+    else{
+      this.createAppointmentError();
+    }
+  }
+
+
+  private validateAppointment(workingHoursStart : Date, workingHoursEnd : Date, appointment : Appointment) : boolean{
+
+    const hoursStart = workingHoursStart.getHours();
+    const minutesStart = workingHoursStart.getMinutes();
+
+    const hoursEnd = workingHoursEnd.getHours();
+    const minutesEnd = workingHoursEnd.getMinutes();
+
+    const hoursAppointment = appointment.dateAndTime.getHours();
+    const minutesAppointment = appointment.dateAndTime.getMinutes();
+
+    if(hoursAppointment > hoursStart || (hoursAppointment === hoursStart && minutesAppointment >= minutesStart)){
+      if(minutesAppointment + appointment.duration > 60){
+        let newAppointmentHours = hoursAppointment + Math.floor((minutesAppointment + appointment.duration)/60)
+        let newAppointmentMinutes = (minutesAppointment + appointment.duration) % 60
+        if(newAppointmentHours < hoursEnd || (newAppointmentHours === hoursEnd && newAppointmentMinutes < minutesEnd)){
+          return true;
+        }
+        else{
+          return false;
+        }
       }
-    })
+      else{
+        if(hoursAppointment < hoursEnd || (hoursAppointment === hoursEnd && minutesAppointment < minutesEnd)){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+    else{
+      return false;
+    }
+  }
+
+  private createAppointmentError() : void{
+    this.isAppointmentCreateErrorVisible = true;
   }
 
   loadAdmin(){
@@ -186,13 +235,21 @@ export class CompanyAdministratorProfileComponent {
   }
 
   selectAdmin(){
+    this.equipmentSelected = false;
     this.companySelected = false;
     this.adminSelected = true;
   }
 
   selectCompany(){
+    this.equipmentSelected = false;
     this.adminSelected = false;
     this.companySelected = true;
+  }
+
+  selectEquipment(){
+    this.adminSelected = false;
+    this.companySelected = false;
+    this.equipmentSelected = true;
   }
 
   editAdmin(){
@@ -231,6 +288,23 @@ export class CompanyAdministratorProfileComponent {
       next : () =>{
         this.loadAdmin();
       }
+    })
+  }
+
+  getCurrentDate() : string{
+    const today = new Date();
+    const todayDay = today.getDate();
+    const todayMonth = today.getMonth() + 1;
+    const todayYear = today.getFullYear();
+    const date = todayYear + "-" + todayMonth + "-" + todayDay;
+    return date;
+  }
+
+  private cleanAppointmentform() : void{
+    this.appointmentForm = new FormGroup({
+      selectedDate: new FormControl('',[Validators.required]),
+      selectedTime: new FormControl('',[Validators.required]),
+      duration : new FormControl(0,[Validators.required])
     })
   }
 

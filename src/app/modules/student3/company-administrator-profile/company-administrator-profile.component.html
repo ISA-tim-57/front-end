@@ -2,6 +2,7 @@
     <div class="menu-buttons">
         <button (click)="selectAdmin()">Administrator profile</button>
         <button (click)="selectCompany()">Company profile</button>
+        <button (click)="selectEquipment()">Equipments</button>
     </div>
     <div *ngIf="adminSelected" class="admins-form-container">
         <form [formGroup]="adminForm">
@@ -173,11 +174,12 @@
             <form [formGroup]="appointmentForm">
                 <h2>Create appointment</h2>
                 <label>Date:</label>
-                <input type="date" formControlName = "selectedDate"/>
+                <input type="date" [min] = "getCurrentDate()" formControlName = "selectedDate"/>
                 <label>Time:</label>
                 <input type="time" formControlName = "selectedTime"/>
                 <label>Duration:</label>
                 <input type="number" formControlName = "duration"/>
+                <div class="errorMessage" *ngIf="isAppointmentCreateErrorVisible">Collecting equipment will exceed working hours</div>
                 <button type="submit" (click)="addAppointmentClick()">Add</button>
             </form>
             
@@ -201,6 +203,10 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div *ngIf="equipmentSelected">
+        <app-company-equipments [selectedCompanyId] = "companyId"></app-company-equipments>
     </div>
 </div>
 

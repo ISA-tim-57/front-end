@@ -49,5 +49,17 @@ export class Student3Service {
     return this.http.put<User>("http://localhost:8080/api/users/updatecompanyadmin/" + id,updatedCompanyAdmin);
   }
 
+  updateEquipment(id : number, updatedEquipment : Equipment) : Observable<Equipment>{
+    return this.http.put<Equipment>("http://localhost:8080/api/equipments/" + id, updatedEquipment)
+  }
+
+  deleteEquipment(id : number) : Observable<void>{
+    return this.http.delete<void>("http://localhost:8080/api/equipments/" + id);
+  }
+
+  searchEquipment(namePart : string) : Observable<Equipment[]>{
+    return this.http.get<Equipment[]>("http://localhost:8080/api/equipments/search/" + namePart);
+  }
+
   
 }
