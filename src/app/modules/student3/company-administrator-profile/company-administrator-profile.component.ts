@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Student3Service } from '../student3.service';
 import { Company, createEmptyCompany } from '../model/company.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Address } from '../model/address.model';
 import { Appointment, createEmptyAppointment } from '../model/appointment.model';
 import { User, createEmptyUser } from '../model/user.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -19,9 +20,13 @@ export class CompanyAdministratorProfileComponent {
   appointments : Appointment[] = [];
 
   admin : User = createEmptyUser();
+  adminId : number = 1;
 
   isFormeditable : boolean = false;
   isAdminFormEditable : boolean = false;
+  isChangePasswordVisible : boolean = false;
+
+  passwordError : boolean = false;
   companyId : number = 1;
 
   companySelected : boolean = false;
@@ -57,9 +62,37 @@ export class CompanyAdministratorProfileComponent {
     zipCode: new FormControl('', [Validators.required]),
   });
 
+  changePasswordForm = new FormGroup({
+    oldPassword : new FormControl('', [Validators.required]),
+    newPassword : new FormControl('', [Validators.required]),
+    confirmPassword : new FormControl('', [Validators.required])
+  });
+
+  passwordMatchValidator(): boolean {
+    if(this.changePasswordForm.value.newPassword !== "" && this.changePasswordForm.value.confirmPassword !== ""
+       && this.changePasswordForm.value.newPassword === this.changePasswordForm.value.confirmPassword ){
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+
+  validateChangePassword() : boolean{
+    if(this.passwordMatchValidator() && !this.changePasswordForm.invalid){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   ngOnInit() : void{
     this.loadAdmin();
     this.loadCompany();
+
+    this.changePasswordForm.get('newPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
+    this.changePasswordForm.get('confirmPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
   }
 
   
@@ -167,7 +200,7 @@ export class CompanyAdministratorProfileComponent {
   }
 
   loadAdmin(){
-    this.service.getUser(1).subscribe({
+    this.service.getUser(this.adminId).subscribe({
       next : (result) =>{
         this.admin = result;
 
@@ -291,6 +324,31 @@ export class CompanyAdministratorProfileComponent {
     })
   }
 
+  changePasswordClick(){
+    this.isChangePasswordVisible = true;
+  }
+
+  dismissPasswordChange(){
+    this.isChangePasswordVisible = false;
+    this.passwordError = false;
+    this.cleanChangePassword();
+  }
+
+  changePassword(){
+    this.service.changePassword(this.adminId,this.changePasswordForm.value.oldPassword || "",this.changePasswordForm.value.newPassword || "").subscribe({
+      next : (res : number) =>{
+        if(res === 0){
+          this.passwordError = true;
+        }
+        else{
+          this.passwordError = false;
+          this.cleanChangePassword();
+          this.isChangePasswordVisible = false;
+        }
+      }
+    })
+  }
+
   getCurrentDate() : string{
     const today = new Date();
     const todayDay = today.getDate();
@@ -306,6 +364,14 @@ export class CompanyAdministratorProfileComponent {
       selectedTime: new FormControl('',[Validators.required]),
       duration : new FormControl(0,[Validators.required])
     })
+  }
+
+  private cleanChangePassword() : void{
+    this.changePasswordForm = new FormGroup({
+      oldPassword : new FormControl('', [Validators.required]),
+      newPassword : new FormControl('', [Validators.required]),
+      confirmPassword : new FormControl('', [Validators.required])
+    });
   }
 
 }

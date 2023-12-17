@@ -45,6 +45,11 @@ export class Student3Service {
     return this.http.get<User>("http://localhost:8080/api/users/" + id);
   }
 
+  changePassword(id : number, oldPassword : string, newPassword : string) : Observable<number>{
+    const changePasswordRequest = {oldPassword : oldPassword, newPassword : newPassword}
+    return this.http.put<number>("http://localhost:8080/api/users/changepassword/" + id, changePasswordRequest);
+  }
+
   updateCompanyAdmin(id : number, updatedCompanyAdmin : User) : Observable<User>{
     return this.http.put<User>("http://localhost:8080/api/users/updatecompanyadmin/" + id,updatedCompanyAdmin);
   }

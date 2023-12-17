@@ -106,12 +106,22 @@ export class CompanyEquipmentsComponent {
   }
 
   deleteEquipment(id : number){
-    this.service.deleteEquipment(id).subscribe({
-      next : () =>{
-        this.loadEquipments();
-      }
-    })
+    if(this.checkIfDeleteIsAllowed(id)){
+      this.service.deleteEquipment(id).subscribe({
+        next : () =>{
+          this.loadEquipments();
+        }
+      })
+    }
+    else{
+      alert("Equipment is part of some not completed order, you can't delete it")
+    }
+    
 
+  }
+
+  checkIfDeleteIsAllowed(id : number) : boolean{
+    return true;
   }
 
   saveEquipment(){
