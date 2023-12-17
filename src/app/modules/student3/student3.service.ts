@@ -28,48 +28,114 @@ export class Student3Service {
   }
 
   getEquipmentsForCompany(copmanyId : number): Observable<Equipment[]>{
-    return this.http.get<Equipment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/equipments');
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.get<Equipment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/equipments',options);
   }
 
   getAppointmentsForCompany(copmanyId : number): Observable<Appointment[]>{
-    return this.http.get<Appointment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/appointments');
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.get<Appointment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/appointments', options);
   }
 
   addEquipmentToCompany(equipment : Equipment): Observable<Equipment>{
-    return this.http.post<Equipment>('http://localhost:8080/api/equipments', equipment);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.post<Equipment>('http://localhost:8080/api/equipments', equipment, options);
   }
 
   addAppointmentToCompany(appointment : Appointment) : Observable<Appointment>{
-    return this.http.post<Appointment>('http://localhost:8080/api/appointments', appointment);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.post<Appointment>('http://localhost:8080/api/appointments', appointment, options);
   }
 
   updateCompany(id : number, updatedCompany : Company) : Observable<Company>{
-    return this.http.put<Company>('http://localhost:8080/api/companies/' + id, updatedCompany);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.put<Company>('http://localhost:8080/api/companies/' + id, updatedCompany, options);
   }
 
   getUser(id : number) : Observable<User> {
-    return this.http.get<User>("http://localhost:8080/api/users/" + id);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.get<User>("http://localhost:8080/api/users/" + id, options);
   }
 
   changePassword(id : number, oldPassword : string, newPassword : string) : Observable<number>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
     const changePasswordRequest = {oldPassword : oldPassword, newPassword : newPassword}
-    return this.http.put<number>("http://localhost:8080/api/users/changepassword/" + id, changePasswordRequest);
+    return this.http.put<number>("http://localhost:8080/api/users/changepassword/" + id, changePasswordRequest, options);
   }
 
   updateCompanyAdmin(id : number, updatedCompanyAdmin : User) : Observable<User>{
-    return this.http.put<User>("http://localhost:8080/api/users/updatecompanyadmin/" + id,updatedCompanyAdmin);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.put<User>("http://localhost:8080/api/users/updatecompanyadmin/" + id,updatedCompanyAdmin, options);
   }
 
   updateEquipment(id : number, updatedEquipment : Equipment) : Observable<Equipment>{
-    return this.http.put<Equipment>("http://localhost:8080/api/equipments/" + id, updatedEquipment)
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.put<Equipment>("http://localhost:8080/api/equipments/" + id, updatedEquipment, options)
   }
 
   deleteEquipment(id : number) : Observable<void>{
-    return this.http.delete<void>("http://localhost:8080/api/equipments/" + id);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.delete<void>("http://localhost:8080/api/equipments/" + id, options);
   }
 
   searchEquipment(namePart : string) : Observable<Equipment[]>{
-    return this.http.get<Equipment[]>("http://localhost:8080/api/equipments/search/" + namePart);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+      // Add more headers as needed
+    });
+    const options = {headers : headers};
+    return this.http.get<Equipment[]>("http://localhost:8080/api/equipments/search/" + namePart, options);
   }
 
   
