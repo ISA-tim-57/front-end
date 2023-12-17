@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
     HttpClientModule,
     AppRoutingModule,
     LayoutModule,
+    AuthModule,
     FormsModule,
     Student3Module,
     Student2Module,

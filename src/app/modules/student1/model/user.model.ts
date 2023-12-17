@@ -11,6 +11,7 @@ export interface User{
     address : Address,
     phone : string,
     profession : string,
+    role: string,
     companyInfo : string,
     
 }
@@ -25,6 +26,7 @@ export const createEmptyUser = (): User => ({
     address: createEmptyAddress(),
     phone: '',
     profession: '',
+    role: '',
     companyInfo: '',
 
   });
