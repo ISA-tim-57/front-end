@@ -38,6 +38,7 @@ export class UserFormComponent {
     number: new FormControl('', Validators.required),
     zipCode: new FormControl('', Validators.required)
   });
+
   
 
   validatePassword(): void {
@@ -54,7 +55,6 @@ export class UserFormComponent {
   }
 
   async addUser(): Promise<void> {
-    console.log(this.userForm.value);
 
     if (this.userForm.valid) {
       const user: User = {
@@ -74,9 +74,11 @@ export class UserFormComponent {
         },
         phone: this.userForm.value.phone || '', // Postavljanje početne vrednosti na prazan string
         profession: this.userForm.value.profession || '', // Postavljanje početne vrednosti na prazan string
+        role: "ORDINARYUSER",
         companyInfo: this.userForm.value.companyInfo || '' // Postavljanje početne vrednosti na prazan string
       };
 
+      console.log(user);
       this.service.addUser(user).subscribe({
         next: (_: any) => {
           console.log("Uspesno");

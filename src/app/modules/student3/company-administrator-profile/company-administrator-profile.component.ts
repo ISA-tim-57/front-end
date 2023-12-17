@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Student3Service } from '../student3.service';
 import { Company, createEmptyCompany } from '../model/company.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Address } from '../model/address.model';
 import { Appointment, createEmptyAppointment } from '../model/appointment.model';
 import { User, createEmptyUser } from '../model/user.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -19,13 +20,20 @@ export class CompanyAdministratorProfileComponent {
   appointments : Appointment[] = [];
 
   admin : User = createEmptyUser();
+  adminId : number = 1;
 
   isFormeditable : boolean = false;
   isAdminFormEditable : boolean = false;
+  isChangePasswordVisible : boolean = false;
+
+  passwordError : boolean = false;
   companyId : number = 1;
 
   companySelected : boolean = false;
   adminSelected : boolean = true;
+  equipmentSelected : boolean = false;
+
+  isAppointmentCreateErrorVisible : boolean = false;
 
   companyForm = new FormGroup({
     name: new FormControl(this.company.name,[Validators.required]),
@@ -54,9 +62,37 @@ export class CompanyAdministratorProfileComponent {
     zipCode: new FormControl('', [Validators.required]),
   });
 
+  changePasswordForm = new FormGroup({
+    oldPassword : new FormControl('', [Validators.required]),
+    newPassword : new FormControl('', [Validators.required]),
+    confirmPassword : new FormControl('', [Validators.required])
+  });
+
+  passwordMatchValidator(): boolean {
+    if(this.changePasswordForm.value.newPassword !== "" && this.changePasswordForm.value.confirmPassword !== ""
+       && this.changePasswordForm.value.newPassword === this.changePasswordForm.value.confirmPassword ){
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+
+  validateChangePassword() : boolean{
+    if(this.passwordMatchValidator() && !this.changePasswordForm.invalid){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   ngOnInit() : void{
     this.loadAdmin();
     this.loadCompany();
+
+    this.changePasswordForm.get('newPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
+    this.changePasswordForm.get('confirmPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
   }
 
   
@@ -105,20 +141,66 @@ export class CompanyAdministratorProfileComponent {
     appointment.free = true;
     appointment.dateAndTime = new Date(`${this.appointmentForm.value.selectedDate}T${this.appointmentForm.value.selectedTime}`);
 
-    this.service.addAppointmentToCompany(appointment).subscribe({
-      next : ()=>{
-        this.loadAppointments();
-        this.appointmentForm = new FormGroup({
-          selectedDate: new FormControl('',[Validators.required]),
-          selectedTime: new FormControl('',[Validators.required]),
-          duration : new FormControl(0,[Validators.required])
-        })
+    let workingHoursStart = new Date(`1970-01-01T${this.company.workingHoursStart}`);
+    let workingHoursEnd = new Date(`1970-01-01T${this.company.workingHoursEnd}`);
+
+    if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
+      this.isAppointmentCreateErrorVisible = false;
+      this.service.addAppointmentToCompany(appointment).subscribe({
+        next : ()=>{
+          this.loadAppointments();
+          this.cleanAppointmentform();
+        }
+      })
+    }
+    else{
+      this.createAppointmentError();
+    }
+  }
+
+
+  private validateAppointment(workingHoursStart : Date, workingHoursEnd : Date, appointment : Appointment) : boolean{
+
+    const hoursStart = workingHoursStart.getHours();
+    const minutesStart = workingHoursStart.getMinutes();
+
+    const hoursEnd = workingHoursEnd.getHours();
+    const minutesEnd = workingHoursEnd.getMinutes();
+
+    const hoursAppointment = appointment.dateAndTime.getHours();
+    const minutesAppointment = appointment.dateAndTime.getMinutes();
+
+    if(hoursAppointment > hoursStart || (hoursAppointment === hoursStart && minutesAppointment >= minutesStart)){
+      if(minutesAppointment + appointment.duration > 60){
+        let newAppointmentHours = hoursAppointment + Math.floor((minutesAppointment + appointment.duration)/60)
+        let newAppointmentMinutes = (minutesAppointment + appointment.duration) % 60
+        if(newAppointmentHours < hoursEnd || (newAppointmentHours === hoursEnd && newAppointmentMinutes < minutesEnd)){
+          return true;
+        }
+        else{
+          return false;
+        }
       }
-    })
+      else{
+        if(hoursAppointment < hoursEnd || (hoursAppointment === hoursEnd && minutesAppointment < minutesEnd)){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+    else{
+      return false;
+    }
+  }
+
+  private createAppointmentError() : void{
+    this.isAppointmentCreateErrorVisible = true;
   }
 
   loadAdmin(){
-    this.service.getUser(1).subscribe({
+    this.service.getUser(this.adminId).subscribe({
       next : (result) =>{
         this.admin = result;
 
@@ -186,13 +268,21 @@ export class CompanyAdministratorProfileComponent {
   }
 
   selectAdmin(){
+    this.equipmentSelected = false;
     this.companySelected = false;
     this.adminSelected = true;
   }
 
   selectCompany(){
+    this.equipmentSelected = false;
     this.adminSelected = false;
     this.companySelected = true;
+  }
+
+  selectEquipment(){
+    this.adminSelected = false;
+    this.companySelected = false;
+    this.equipmentSelected = true;
   }
 
   editAdmin(){
@@ -232,6 +322,56 @@ export class CompanyAdministratorProfileComponent {
         this.loadAdmin();
       }
     })
+  }
+
+  changePasswordClick(){
+    this.isChangePasswordVisible = true;
+  }
+
+  dismissPasswordChange(){
+    this.isChangePasswordVisible = false;
+    this.passwordError = false;
+    this.cleanChangePassword();
+  }
+
+  changePassword(){
+    this.service.changePassword(this.adminId,this.changePasswordForm.value.oldPassword || "",this.changePasswordForm.value.newPassword || "").subscribe({
+      next : (res : number) =>{
+        if(res === 0){
+          this.passwordError = true;
+        }
+        else{
+          this.passwordError = false;
+          this.cleanChangePassword();
+          this.isChangePasswordVisible = false;
+        }
+      }
+    })
+  }
+
+  getCurrentDate() : string{
+    const today = new Date();
+    const todayDay = today.getDate();
+    const todayMonth = today.getMonth() + 1;
+    const todayYear = today.getFullYear();
+    const date = todayYear + "-" + todayMonth + "-" + todayDay;
+    return date;
+  }
+
+  private cleanAppointmentform() : void{
+    this.appointmentForm = new FormGroup({
+      selectedDate: new FormControl('',[Validators.required]),
+      selectedTime: new FormControl('',[Validators.required]),
+      duration : new FormControl(0,[Validators.required])
+    })
+  }
+
+  private cleanChangePassword() : void{
+    this.changePasswordForm = new FormGroup({
+      oldPassword : new FormControl('', [Validators.required]),
+      newPassword : new FormControl('', [Validators.required]),
+      confirmPassword : new FormControl('', [Validators.required])
+    });
   }
 
 }

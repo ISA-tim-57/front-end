@@ -2,73 +2,97 @@
     <div class="menu-buttons">
         <button (click)="selectAdmin()">Administrator profile</button>
         <button (click)="selectCompany()">Company profile</button>
+        <button (click)="selectEquipment()">Equipments</button>
     </div>
-    <div *ngIf="adminSelected" class="admins-form-container">
-        <form [formGroup]="adminForm">
-            <table>
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" formControlName = "name"/></td>
-                </tr>
-                <tr>
-                    <td>Surname:</td>
-                    <td><input type="text" formControlName = "surname"/></td>
-                </tr>
-                <tr>
-                    <td>Phone:</td>
-                    <td><input type="tel" formControlName = "phone"/></td>
-                </tr>
-            </table>
-            <table>
-                <fieldset>
-                    <legend>Address</legend>
+    <div class="administrator-container">
+        <div *ngIf="adminSelected" class="admins-form-container">
+            <form [formGroup]="adminForm">
+                <table>
                     <tr>
-                        <td>
-                            <label>Country:</label>
-                        </td>
-                        <td>
-                            <input type="text" formControlName = "country"/>
-                        </td>
+                        <td>Name:</td>
+                        <td><input type="text" formControlName = "name"/></td>
                     </tr>
                     <tr>
-                        <td>
-                            <label>City:</label>
-                        </td>
-                        <td>
-                            <input type="text" formControlName = "city"/>
-                        </td>
+                        <td>Surname:</td>
+                        <td><input type="text" formControlName = "surname"/></td>
                     </tr>
                     <tr>
-                        <td>
-                            <label>Street:</label>
-                        </td>
-                        <td>
-                            <input type="text" formControlName = "street"/>
-                        </td>
+                        <td>Phone:</td>
+                        <td><input type="tel" formControlName = "phone"/></td>
                     </tr>
+                </table>
+                <table>
+                    <fieldset>
+                        <legend>Address</legend>
+                        <tr>
+                            <td>
+                                <label>Country:</label>
+                            </td>
+                            <td>
+                                <input type="text" formControlName = "country"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>City:</label>
+                            </td>
+                            <td>
+                                <input type="text" formControlName = "city"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Street:</label>
+                            </td>
+                            <td>
+                                <input type="text" formControlName = "street"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Number:</label>
+                            </td>
+                            <td>
+                                <input type="text" formControlName = "number"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Zip Code:</label>
+                            </td>
+                            <td>
+                                <input type="text" formControlName = "zipCode"/>
+                            </td>
+                        </tr>
+                    </fieldset>   
+                </table>
+                <table>
                     <tr>
                         <td>
-                            <label>Number:</label>
+                            <button (click)="changePasswordClick()">Change password</button>
                         </td>
-                        <td>
-                            <input type="text" formControlName = "number"/>
-                        </td>
+                        <td></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <label>Zip Code:</label>
-                        </td>
-                        <td>
-                            <input type="text" formControlName = "zipCode"/>
-                        </td>
-                    </tr>
-                </fieldset>   
-            </table>
-            <button (click) = "editAdmin()" *ngIf="!isAdminFormEditable">Edit</button>
-            <button *ngIf="isAdminFormEditable" (click) = "updateAdmin()">Save</button>       
-        </form>
+                </table>
+                <button (click) = "editAdmin()" *ngIf="!isAdminFormEditable">Edit</button>
+                <button *ngIf="isAdminFormEditable" (click) = "updateAdmin()">Save</button>       
+            </form>
+    
+        </div>
+        <div class="change-password-container" *ngIf="isChangePasswordVisible">
+            <form [formGroup]="changePasswordForm">
+                <input type="password" placeholder="Old passsword" formControlName = "oldPassword"/>
+                <input type="password" placeholder="New passsword" formControlName = "newPassword"/>
+                <input type="password" placeholder="Confirm new passsword" formControlName = "confirmPassword"/>
+                <div *ngIf="passwordError" class="errorMessage">Old password is not correct</div>
+                <button [disabled]="!validateChangePassword()" (click)="changePassword()">Change passsword</button>
+                <button (click)="dismissPasswordChange()">Dissmiss</button>
+            </form>
+        </div>
+    </div>
+    
 
-    </div>
+
     <div class="sub-container" *ngIf="companySelected">
         <div class="form-container">
             <form [formGroup]="companyForm">
@@ -173,11 +197,12 @@
             <form [formGroup]="appointmentForm">
                 <h2>Create appointment</h2>
                 <label>Date:</label>
-                <input type="date" formControlName = "selectedDate"/>
+                <input type="date" [min] = "getCurrentDate()" formControlName = "selectedDate"/>
                 <label>Time:</label>
                 <input type="time" formControlName = "selectedTime"/>
                 <label>Duration:</label>
                 <input type="number" formControlName = "duration"/>
+                <div class="errorMessage" *ngIf="isAppointmentCreateErrorVisible">Collecting equipment will exceed working hours</div>
                 <button type="submit" (click)="addAppointmentClick()">Add</button>
             </form>
             
@@ -201,6 +226,10 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div *ngIf="equipmentSelected">
+        <app-company-equipments [selectedCompanyId] = "companyId"></app-company-equipments>
     </div>
 </div>
 

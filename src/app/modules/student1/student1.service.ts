@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from './model/user.model';
@@ -14,8 +14,10 @@ export class Student1Service {
 
 
   addUser(user : User): Observable<User>{
-    return this.http.post<User>('http://localhost:8080/api/users', user);
+    return this.http.post<User>('http://localhost:8080/api/auth/register', user);
   }
+
+
   
   getCompanies(): Observable<Company[]> {
     return this.http.get<Company[]>('http://localhost:8080/api/companies/all');
@@ -23,6 +25,10 @@ export class Student1Service {
 
   getEquipments(): Observable<Equipment[]> {
     return this.http.get<Equipment[]>('http://localhost:8080/api/equipments/all');
+  }
+
+  getResponse() : Observable<string>{
+    return this.http.get("http://localhost:8080/api/auth",{ responseType: 'text' });
   }
 
   

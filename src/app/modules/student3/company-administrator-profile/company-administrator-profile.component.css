@@ -22,6 +22,8 @@
     border-radius: 10px;
 }
 
+
+
 .admins-form-container input{
     border-radius: 5px;
     border: 0.5px solid black;
@@ -95,6 +97,41 @@ form{
     flex-direction: column;
 }
 
+.administrator-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.change-password-container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 2%;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.change-password-container input{
+    border-radius: 5px;
+    padding: 5px;
+    border: 0.5px solid black;
+    margin: 5px;
+}
+
+.change-password-container button{
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    border: 0.0px solid black;
+    width: 70%;
+    background-color: lightgray;
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.05);
+    }
+}
+
 .appointments-container{
     flex : 1;
     margin: 2%;
@@ -131,11 +168,12 @@ form{
     font-family: sans-serif;
 }
 
-.appointments-container form input[type = "date"], .appointments-container form input[type="time"], .appointments-container form input[type="number"]{
+.appointments-container input[type = "date"], .appointments-container form input[type="time"], .appointments-container form input[type="number"]{
     margin: 0px;
     padding: 2px;
     border-radius: 5px;
     border: 0.5px solid black;
+    height: 10px;
 }
 
 .appointments-container form button{
@@ -203,4 +241,8 @@ form{
     border: 1px solid white;
     font-variant: small-caps;
     font-family: sans-serif;
+}
+
+.errorMessage{
+    color: red;
 }

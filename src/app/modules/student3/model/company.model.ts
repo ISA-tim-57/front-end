@@ -6,6 +6,8 @@ export interface Company{
     description : string,
     address : Address,
     rating : number,
+    workingHoursStart : Date,
+    workingHoursEnd : Date
 }
 
 export const createEmptyCompany = (): Company => ({
@@ -14,4 +16,6 @@ export const createEmptyCompany = (): Company => ({
     description: '',
     address: createEmptyAddress(),
     rating: 0,
+    workingHoursStart : new Date(),
+    workingHoursEnd : new Date()
   });
