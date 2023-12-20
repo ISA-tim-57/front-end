@@ -1,6 +1,6 @@
-<div>
-    <form [formGroup]="loginForm">
-        <div>
+<div class="login-container">
+    <form [formGroup]="loginForm" class="form-container">
+        <div class="form-element">
             <label>Username: </label>
             <input type="text" formControlName = "username"/>
         </div>
@@ -13,7 +13,5 @@
         </div>
 
     </form>
-
-    <button (click)="logout()">Log out</button>
 </div>
 
