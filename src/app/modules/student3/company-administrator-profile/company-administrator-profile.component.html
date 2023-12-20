@@ -216,12 +216,14 @@
                     <tr>
                         <th>Name</th>
                         <th>Surname</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngFor="let companyAdmin of companyAdmins">
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>{{companyAdmin.name}}</td>
+                        <td>{{companyAdmin.surname}}</td>
+                        <td>{{companyAdmin.email}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -6,6 +6,9 @@ import { Address } from '../model/address.model';
 import { Appointment, createEmptyAppointment } from '../model/appointment.model';
 import { User, createEmptyUser } from '../model/user.model';
 import { HttpResponse } from '@angular/common/http';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Router } from '@angular/router';
+import { CompanyAdmin } from '../model/company-admin.model';
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -14,20 +17,24 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class CompanyAdministratorProfileComponent {
 
-  constructor(private service : Student3Service){}
+  constructor(
+    private service : Student3Service, 
+    private authService : AuthService,
+    private router : Router
+    ){}
 
   company : Company = createEmptyCompany();
   appointments : Appointment[] = [];
+  companyAdmins : CompanyAdmin[] = [];
 
   admin : User = createEmptyUser();
-  adminId : number = 1;
 
   isFormeditable : boolean = false;
   isAdminFormEditable : boolean = false;
   isChangePasswordVisible : boolean = false;
 
   passwordError : boolean = false;
-  companyId : number = 1;
+  companyId : number = 0;
 
   companySelected : boolean = false;
   adminSelected : boolean = true;
@@ -88,11 +95,20 @@ export class CompanyAdministratorProfileComponent {
   }
 
   ngOnInit() : void{
-    this.loadAdmin();
-    this.loadCompany();
+    let user = this.authService.getUser();
+    if(user !== null){
+      this.admin = user;
+      this.companyId = user.companyId;
+      this.loadAdmin();
+      this.loadCompany();
 
-    this.changePasswordForm.get('newPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
-    this.changePasswordForm.get('confirmPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
+      this.changePasswordForm.get('newPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
+      this.changePasswordForm.get('confirmPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
+    }
+    else{
+      this.router.navigate(['error'])
+    }
+    
   }
 
   
@@ -200,7 +216,7 @@ export class CompanyAdministratorProfileComponent {
   }
 
   loadAdmin(){
-    this.service.getUser(this.adminId).subscribe({
+    this.service.getUser(this.admin.id).subscribe({
       next : (result) =>{
         this.admin = result;
 
@@ -237,6 +253,7 @@ export class CompanyAdministratorProfileComponent {
 
         this.companyForm.disable();
         this.loadAppointments();
+        this.loadCompanyAdmins();
         
       }
     })
@@ -246,6 +263,15 @@ export class CompanyAdministratorProfileComponent {
     this.service.getAppointmentsForCompany(this.company.id).subscribe({
       next : (result) => {
         this.appointments = result;
+      }
+    })
+  }
+
+  loadCompanyAdmins(){
+    this.service.getCompanyAdmins(this.company.id).subscribe({
+      next : (result) => {
+        this.companyAdmins = result;
+        console.log(result)
       }
     })
   }
@@ -314,7 +340,9 @@ export class CompanyAdministratorProfileComponent {
       username : this.admin.username,
       password : this.admin.password,
       companyInfo : this.admin.companyInfo,
-      address : updatedAddress
+      address : updatedAddress,
+      role : this.admin.role,
+      companyId : this.admin.companyId
     }
 
     this.service.updateCompanyAdmin(this.admin.id,updatedCompanyAdmin).subscribe({
@@ -335,7 +363,8 @@ export class CompanyAdministratorProfileComponent {
   }
 
   changePassword(){
-    this.service.changePassword(this.adminId,this.changePasswordForm.value.oldPassword || "",this.changePasswordForm.value.newPassword || "").subscribe({
+
+    this.service.changePassword(this.admin.id,this.changePasswordForm.value.oldPassword || "",this.changePasswordForm.value.newPassword || "").subscribe({
       next : (res : number) =>{
         if(res === 0){
           this.passwordError = true;

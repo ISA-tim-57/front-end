@@ -11,18 +11,23 @@ import { CompanySearchComponent as cs1} from './modules/student1/company-search/
 import { EquipmentSearchComponent } from './modules/student1/equipment-search/equipment-search.component';
 import { CompanyAdministratorProfileComponent } from './modules/student3/company-administrator-profile/company-administrator-profile.component';
 import { LoginComponent } from './auth/login/login.component';
+import { ErrorComponent } from './auth/error/error.component';
+import { UserGuard } from './auth/user.guard';
+import { CompanyAdminGuard } from './auth/companyadmin.guard';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'companyprofile', component: CompanyProfileComponent},
+  {path: 'error', component: ErrorComponent},
+  {path: 'companyprofile', component: CompanyProfileComponent, canActivate: [UserGuard]},
   {path: 'userProfile', component: UserProfileComponent},
   {path: 'companySearch', component: cs2},
   {path: 'register',component: UserFormComponent },
   {path: 'companysearch',component: cs1 },
   {path: 'equipmentsearch',component: EquipmentSearchComponent },
-  {path: 'administratorprofile', component: CompanyAdministratorProfileComponent}
+  {path: 'administratorprofile', component: CompanyAdministratorProfileComponent, canActivate: [CompanyAdminGuard]},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

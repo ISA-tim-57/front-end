@@ -5,6 +5,7 @@ import { Company } from './model/company.model';
 import { Equipment } from './model/equipment.model';
 import { Appointment } from './model/appointment.model';
 import { User } from './model/user.model';
+import { CompanyAdmin } from './model/company-admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class Student3Service {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
-      // Add more headers as needed
     });
     const options = {headers : headers};
     return this.http.get<Company>('http://localhost:8080/api/companies/'+ id, options);
@@ -31,7 +31,6 @@ export class Student3Service {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
-      // Add more headers as needed
     });
     const options = {headers : headers};
     return this.http.get<Equipment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/equipments',options);
@@ -41,17 +40,25 @@ export class Student3Service {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
-      // Add more headers as needed
     });
     const options = {headers : headers};
     return this.http.get<Appointment[]>('http://localhost:8080/api/companies/'+ copmanyId + '/appointments', options);
+  }
+
+  getCompanyAdmins(companyId : number) : Observable<CompanyAdmin[]>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.get<CompanyAdmin[]>('http://localhost:8080/api/companies/'+ companyId + '/admins', options);
+
   }
 
   addEquipmentToCompany(equipment : Equipment): Observable<Equipment>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
-      // Add more headers as needed
     });
     const options = {headers : headers};
     return this.http.post<Equipment>('http://localhost:8080/api/equipments', equipment, options);
