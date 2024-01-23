@@ -1,5 +1,12 @@
 <div class="navbar-container">
-    <div class="navbar-option">Home</div>
-    <div class="navbar-option">First page</div>
-    <div class="navbar-option">Second page</div>
+    <div class="options-container">
+        <div class="navbar-option">Home</div>
+        <div class="navbar-option">First page</div>
+        <div class="navbar-option">Second page</div>
+    </div>
+    
+    <div class="login">
+        <button *ngIf="!isLoggedIn()" (click)="goToLogin()">Login</button>
+        <button *ngIf="isLoggedIn()" (click)="logOut()">Logout</button>
+    </div>
 </div>
