@@ -21,7 +21,6 @@ export class AuthService {
         localStorage.setItem("jwt",res.accessToken);
         console.log("Uspesno prijavljen")
         this.setUser()
-        
       }
     })
   }

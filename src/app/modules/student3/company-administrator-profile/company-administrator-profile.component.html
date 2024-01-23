@@ -2,7 +2,6 @@
     <div class="menu-buttons">
         <button (click)="selectAdmin()">Administrator profile</button>
         <button (click)="selectCompany()">Company profile</button>
-        <button (click)="selectEquipment()">Equipments</button>
     </div>
     <div class="administrator-container">
         <div *ngIf="adminSelected" class="admins-form-container">
@@ -167,7 +166,7 @@
             </form>
     
         </div>
-        <div class="appointments-container">
+        <!-- <div class="appointments-container">
             <h1>Free appointments</h1>
             <div class="scrollable">
                 <table>
@@ -206,32 +205,31 @@
                 <button type="submit" (click)="addAppointmentClick()">Add</button>
             </form>
             
+        </div> -->
+        <div class="admins-container" *ngIf="companySelected">
+            <h1>Administrators</h1>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>   
+                            <th>Surname</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let companyAdmin of companyAdmins">
+                        <tr>
+                            <td>{{companyAdmin.name}}</td>
+                            <td>{{companyAdmin.surname}}</td>
+                            <td>{{companyAdmin.email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="admins-container" *ngIf="companySelected">
-        <h1>All admins</h1>
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let companyAdmin of companyAdmins">
-                    <tr>
-                        <td>{{companyAdmin.name}}</td>
-                        <td>{{companyAdmin.surname}}</td>
-                        <td>{{companyAdmin.email}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    
 
-    <div *ngIf="equipmentSelected">
-        <app-company-equipments [selectedCompanyId] = "companyId"></app-company-equipments>
-    </div>
+
 </div>
 

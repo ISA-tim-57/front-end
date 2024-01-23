@@ -1,0 +1,119 @@
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.appointments-container{
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    padding: 20px;
+    background-color: rgb(120, 120, 133);
+    border-radius: 10px;
+    height: 80vh;
+}
+
+.appointments-container h1{
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0px;
+    color: white;
+
+}
+
+.scrollable{
+    overflow-x: hidden;
+    max-height: 50%;
+    padding: 10px;
+    margin: 5px;
+}
+
+.appointments-container form{
+    width: 20%;
+    margin: 10px;
+    border: 0px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: first baseline;
+    align-self: center;
+    background-color: white;
+}
+
+.appointments-container form h2{
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+.appointments-container form input[type="number"]{
+    margin: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0.5px solid black;
+    height: 10px;
+}
+
+.appointments-container form input[type="time"]{
+    margin: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0.5px solid black;
+    height: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.appointments-container input[type = "date"] {
+    margin: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0.5px solid black;
+    height: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.appointments-container form button{
+    margin: 10px;
+    padding: 10px;
+    width: 50%;
+    align-self: center;
+    border-radius: 10px;
+    border: 0px;
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.05)
+    }
+    background-color: black;
+    color: white;
+}
+
+.appointments-container table{
+    width: 100%;
+    border-collapse: collapse;
+    height: 80%;
+}
+
+.appointments-container th, .appointments-container td {
+    border: 1px solid #2d2d2d;
+    text-align: left;
+    padding: 8px;
+    background-color: white;
+}
+
+.appointments-container th {
+    background-color: #1b1140;
+    color: white;
+    border: 1px solid white;
+    font-variant: small-caps;
+    font-family: sans-serif;
+}
+
+.errorMessage{
+    color: red;
+}
+
+.form-element{
+    margin-bottom: 10px;
+}
+

@@ -38,7 +38,7 @@ export class CompanyAdministratorProfileComponent {
 
   companySelected : boolean = false;
   adminSelected : boolean = true;
-  equipmentSelected : boolean = false;
+
 
   isAppointmentCreateErrorVisible : boolean = false;
 
@@ -271,7 +271,6 @@ export class CompanyAdministratorProfileComponent {
     this.service.getCompanyAdmins(this.company.id).subscribe({
       next : (result) => {
         this.companyAdmins = result;
-        console.log(result)
       }
     })
   }
@@ -294,22 +293,15 @@ export class CompanyAdministratorProfileComponent {
   }
 
   selectAdmin(){
-    this.equipmentSelected = false;
     this.companySelected = false;
     this.adminSelected = true;
   }
 
   selectCompany(){
-    this.equipmentSelected = false;
     this.adminSelected = false;
     this.companySelected = true;
   }
 
-  selectEquipment(){
-    this.adminSelected = false;
-    this.companySelected = false;
-    this.equipmentSelected = true;
-  }
 
   editAdmin(){
     this.isAdminFormEditable= true;

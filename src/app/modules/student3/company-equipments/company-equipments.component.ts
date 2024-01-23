@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Student3Service } from '../student3.service';
 import { Equipment, createEmptyEquipment } from '../model/equipment.model';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-company-equipments',
@@ -11,11 +12,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './company-equipments.component.html',
   styleUrl: './company-equipments.component.css'
 })
+
+
+//Ova komponenta predstavlja prikaz opreme administratoru kompanije
+//Ovde administrator moze da dodaje, menja i brise opremu kompanije
+
 export class CompanyEquipmentsComponent {
 
-  @Input() selectedCompanyId : number = 0;
+  constructor(
+    private service : Student3Service,
+    private authService : AuthService,
+    ){}
 
-  constructor(private service : Student3Service){}
+  selectedCompanyId : number = this.authService.getUser()?.companyId ?? 0;
 
   equipments : Equipment[] = [];
 

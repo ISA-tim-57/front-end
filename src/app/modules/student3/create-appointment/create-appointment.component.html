@@ -1,0 +1,60 @@
+<div class="appointments-container">
+    <form [formGroup]="appointmentForm">
+        <div class="form-element">
+            <div>
+                <label>Date:</label>
+            </div>
+            <div>
+                <input type="date" [min] = "getCurrentDate()" formControlName = "selectedDate"/>
+            </div>
+        </div>
+        <div class="form-element">
+            <div>
+                <label>Time:</label>
+            </div>
+            <div>
+                <input type="time" formControlName = "selectedTime"/>
+            </div>
+        </div>
+        <div class="form-element">
+            <div>
+                <label>Duration (min):</label>
+            </div>
+            <div>
+                <input type="number" formControlName = "duration"/>
+            </div>
+        </div>
+        
+        <div class="errorMessage" *ngIf="isAppointmentCreateErrorVisible">Collecting equipment will exceed working hours</div>
+        <button type="submit" (click)="addAppointmentClick()">Create appointment</button>
+    </form>
+    
+    <h1>Free appointments</h1>
+    <div class="scrollable">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Administrator name</th>
+                    <th>Administrator surname</th>
+                </tr>
+            </thead>
+            
+            <tbody *ngFor="let appointment of appointments">
+                <tr *ngIf="appointment.free">
+                    <td>{{transformToDate(appointment.dateAndTime)}}</td>
+                    <td>{{transformToTime(appointment.dateAndTime)}}</td>
+                    <td>{{appointment.duration}}</td>
+                    <td>{{appointment.administratorName}}</td>
+                    <td>{{appointment.administratorSurname}}</td>
+                </tr>
+                
+            </tbody>
+            
+        </table>
+    </div>
+    
+    
+</div>

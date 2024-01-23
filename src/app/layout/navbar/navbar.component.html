@@ -1,8 +1,41 @@
 <div class="navbar-container">
-    <div class="options-container">
-        <div class="navbar-option">Home</div>
-        <div class="navbar-option">First page</div>
-        <div class="navbar-option">Second page</div>
+    <div *ngIf="!isLoggedIn()" class="options-container">
+        <div class="navbar-option" (click)="goToHomepage()">Home</div>
+        
+        <div class="navbar-option">Second option</div>
+        
+    </div>
+    <div *ngIf="isUser()" class="options-container">
+        <div class="navbar-option" (click)="goToHomepage()">Home</div>
+        
+        <div class="navbar-option">Users First page</div>
+        
+        <div class="navbar-option">Users Second page</div>
+        
+    </div>
+    <div class="options-container" *ngIf="isCompanyAdmin()">
+        <div class="navbar-option" (click)="goToHomepage()">Home</div>
+        
+        <div class="navbar-option" (click)="goToCompanyAdminProfile()">My profile</div>
+        
+        <div class="navbar-option" (click)="goToCompanyEquipments()">Company equipments</div>
+        
+        <div class="navbar-option">Equipment take over</div>
+        
+        <div class="navbar-option" (click)="goToCreateAppointment()">Appointments</div>
+        
+        <div class="navbar-option">Customers</div>
+        
+        <div class="navbar-option">Calendar</div>
+        
+    </div>
+    <div *ngIf="isSystemAdmin()" class="options-container">
+        <div class="navbar-option" (click)="goToHomepage()">Home</div>
+        
+        <div class="navbar-option">System Admin first page</div>
+        
+        <div class="navbar-option">System Admin second page</div>
+        
     </div>
     
     <div class="login">
