@@ -36,6 +36,10 @@
 .login button{
     &:hover{
         cursor: pointer;
+        transform: scale(1.05);
     }
-    padding: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 0px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }

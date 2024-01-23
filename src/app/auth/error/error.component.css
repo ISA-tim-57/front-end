@@ -1,0 +1,21 @@
+.main-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+}
+
+.go-back{
+    padding: 2%;
+}
+
+.go-back button{
+    padding: 10px;
+    border-radius: 10px;
+
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.05);
+    }
+}
