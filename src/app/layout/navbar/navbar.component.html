@@ -1,8 +1,62 @@
 <div class="navbar-container">
-    <div class="options-container">
-        <div class="navbar-option">Home</div>
-        <div class="navbar-option">First page</div>
-        <div class="navbar-option">Second page</div>
+    <div *ngIf="!isLoggedIn()" class="options-container">
+        <img class="home-button" (click)="goToHomepage()" src="../../../assets/images/home.png"/>
+        
+        <div class="navbar-option">
+            <img class="menu-option-image" src="../../../assets/images/box.png"/>
+            Second option
+        </div>
+        
+    </div>
+    <div *ngIf="isUser()" class="options-container">
+        <img class="home-button" (click)="goToHomepage()" src="../../../assets/images/home.png"/>
+        
+        <div class="navbar-option">Users First page</div>
+        
+        <div class="navbar-option">Users Second page</div>
+        
+    </div>
+    <div class="options-container" *ngIf="isCompanyAdmin()">
+        <img class="home-button" (click)="goToHomepage()" src="../../../assets/images/home.png"/>
+        
+        <div class="navbar-option" (click)="goToCompanyAdminProfile()">
+            <img class="menu-option-image" src="../../../assets/images/profile.png"/>
+            Profile   
+        </div>
+        
+        <div class="navbar-option" (click)="goToCompanyEquipments()">
+            <img class="menu-option-image" src="../../../assets/images/equipment.png"/>
+            Equipments
+        </div>
+        
+        <div class="navbar-option">
+            <img class="menu-option-image" src="../../../assets/images/box.png"/>
+            Delivery
+        </div>
+        
+        <div class="navbar-option" (click)="goToCreateAppointment()">
+            <img class="menu-option-image" src="../../../assets/images/appointment.png"/>
+            Appointments 
+        </div>
+        
+        <div class="navbar-option">
+            <img class="menu-option-image" src="../../../assets/images/customer.png"/>
+            Customers
+        </div>
+        
+        <div class="navbar-option">
+            <img class="menu-option-image" src="../../../assets/images/calendar.png"/>
+            Calendar
+        </div>
+        
+    </div>
+    <div *ngIf="isSystemAdmin()" class="options-container">
+        <img class="home-button" (click)="goToHomepage()" src="../../../assets/images/home.png"/>
+        
+        <div class="navbar-option">System Admin first page</div>
+        
+        <div class="navbar-option">System Admin second page</div>
+        
     </div>
     
     <div class="login">

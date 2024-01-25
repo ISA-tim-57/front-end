@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Company, createEmptyCompany } from '../model/company.model';
 import { Student3Service } from '../student3.service';
-import { Equipment } from '../model/equipment.model';
-import { Appointment } from '../model/appointment.model';
+import { Company, createEmptyCompany } from 'src/app/model/company.model';
+import { Equipment } from 'src/app/model/equipment.model';
+import { Appointment } from 'src/app/model/appointment.model';
 
 
 @Component({

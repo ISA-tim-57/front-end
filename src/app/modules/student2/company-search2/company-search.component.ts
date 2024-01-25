@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Student3Service } from '../../student3/student3.service';
-import { Company, createEmptyCompany } from '../../student3/model/company.model';
 import { Student2Service } from '../student2.service';
+import { Company } from 'src/app/model/company.model';
 @Component({
   selector: 'app-company-search',
   templateUrl: './company-search.component.html',

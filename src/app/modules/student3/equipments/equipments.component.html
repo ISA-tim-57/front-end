@@ -1,31 +1,11 @@
 <div class="main-container">
-  <!-- <button
-    class="new-equipment"
-    (click)="newEquipmentClick()"
-    *ngIf="!isFormEnabled"
-  >
-    + New equipment
-  </button>
-
-  <form [formGroup]="equipmentForm" class="add-form" *ngIf="isFormEnabled">
-    <div class="add-equipment-form">
-      <input type="text" placeholder="Name" formControlName="name" />
-      <input
-        type="text"
-        placeholder="Description"
-        formControlName="description"
-      />
-      <input type="number" placeholder="Price" formControlName="price" />
-      <button type="submit" (click)="addEquipment()">Add</button>
-    </div>
-  </form> -->
-
   <div>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Description</th>
+          <th>Count</th>
           <th>Price ($)</th>
         </tr>
       </thead>
@@ -33,6 +13,7 @@
         <tr>
           <td>{{ equipment.name }}</td>
           <td>{{ equipment.description }}</td>
+          <td>{{ equipment.count }}</td>
           <td>{{ equipment.price }}</td>
         </tr>
       </tbody>

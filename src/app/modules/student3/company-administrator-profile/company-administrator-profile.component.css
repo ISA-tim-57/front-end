@@ -1,17 +1,31 @@
 .main-container{
     display: flex;
     flex-direction: column;
-    background-color: gray;
+    background-color: rgb(120, 120, 133);
+    margin: 2%;
+    height: 88.5vh;
+    border-radius: 10px;
 }
 
 .menu-buttons{
-     background-color: darkblue;
+     background-color: white;
 }
 
 .menu-buttons button{
-    font-family: sans-serif;
+    background-color: #1b1140;
+    font-stretch: ultra-expanded;
+    color: white;
+    width: 20%;
     padding: 10px;
     cursor: pointer;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border: 0.5px solid black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    &:hover{
+        transform: scale(1.05)
+    }
 }
 
 .admins-form-container{
@@ -81,6 +95,7 @@
     &:hover{
         transform: scale(1.1);
     }
+    align-self: center;
 }
 
 .editButton{
@@ -132,87 +147,13 @@ form{
     }
 }
 
-.appointments-container{
-    flex : 1;
-    margin: 2%;
-    margin-left: 1%;
-    padding: 20px;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    height: 66vh;
-}
-
-.appointments-container h1{
-    font-family: sans-serif;
-    margin: 0px;
-    font-variant: small-caps;
-}
-
-.scrollable{
-    overflow-x: scroll;
-    max-height: 50%;
-   
-}
-
-.appointments-container form{
-    height: 40%;
-    width: 40%;
-    margin: 10px;
-    border: 1px solid black;
-    padding: 5px;
-    border-radius: 10px;
-}
-
-.appointments-container form h2{
-    margin: 0px;
-    font-family: sans-serif;
-}
-
-.appointments-container input[type = "date"], .appointments-container form input[type="time"], .appointments-container form input[type="number"]{
-    margin: 0px;
-    padding: 2px;
-    border-radius: 5px;
-    border: 0.5px solid black;
-    height: 10px;
-}
-
-.appointments-container form button{
-    margin: 10px;
-    padding: 5px;
-    width: 50%;
-    align-self: center;
-    cursor: pointer;
-}
-
-.appointments-container table{
-    width: 90%;
-    border-collapse: collapse;
-    margin: 20px;
-    height: 80%;
-}
-
-.appointments-container th, .appointments-container td {
-    border: 1px solid #2d2d2d;
-    text-align: left;
-    padding: 8px;
-    background-color: white;
-}
-
-.appointments-container th {
-    background-color: #1b1140;
-    color: white;
-    border: 1px solid white;
-    font-variant: small-caps;
-    font-family: sans-serif;
-}
-
 .admins-container{
     margin: 2%;
-    margin-top: 0%;
     border-radius: 10px;
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .admins-container table{
@@ -224,11 +165,18 @@ form{
 
 .admins-container h1{
     margin-left: 2%;
+    margin-top: 2%;
     font-family: sans-serif;
-    font-variant: small-caps;
 }
 
-.admins-container th, .appointments-container td {
+.admins-container th {
+    border: 1px solid #2d2d2d;
+    text-align: left;
+    padding: 8px;
+    background-color: white;
+}
+
+.admins-container td{
     border: 1px solid #2d2d2d;
     text-align: left;
     padding: 8px;
@@ -238,7 +186,7 @@ form{
 .admins-container th {
     background-color: #1b1140;
     color: white;
-    border: 1px solid white;
+    border: 1px solid #2d2d2d;
     font-variant: small-caps;
     font-family: sans-serif;
 }

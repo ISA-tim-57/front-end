@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Student1Service } from '../student1.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../model/user.model';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { User } from 'src/app/model/user.model';
+import { BasicUser } from 'src/app/model/basic-user.model';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -17,7 +19,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class UserFormComponent {
 
-  constructor(private service : Student1Service) {}
+  constructor(
+    private service : Student1Service,
+    private router : Router,
+    private authService : AuthService,
+    ) {}
 
  
   passwordsNotMatching = false;
@@ -31,7 +37,7 @@ export class UserFormComponent {
     surname: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     profession: new FormControl(''),
-    companyInfo: new FormControl(''),
+    //companyInfo: new FormControl(''),
     country: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
@@ -57,11 +63,15 @@ export class UserFormComponent {
   async addUser(): Promise<void> {
 
     if (this.userForm.valid) {
-      const user: User = {
-        id: 0,
-        email: this.userForm.value.email || '', // Postavljanje početne vrednosti na prazan string
-        password: this.userForm.value.password || '', // Postavljanje početne vrednosti na prazan string
-        username: this.userForm.value.username || '', // Postavljanje početne vrednosti na prazan string
+      const tempuser: User = {
+        id : 0,
+        email: this.userForm.value.email || '',
+        password: this.userForm.value.password || '',
+        username: this.userForm.value.username || '',
+        role: "ROLE_USER",
+      };
+      const basicUser: BasicUser = {
+        user : tempuser,
         name: this.userForm.value.name || '', // Postavljanje početne vrednosti na prazan string
         surname: this.userForm.value.surname || '', // Postavljanje početne vrednosti na prazan string
         address: {
@@ -74,14 +84,13 @@ export class UserFormComponent {
         },
         phone: this.userForm.value.phone || '', // Postavljanje početne vrednosti na prazan string
         profession: this.userForm.value.profession || '', // Postavljanje početne vrednosti na prazan string
-        role: "ORDINARYUSER",
-        companyInfo: this.userForm.value.companyInfo || '' // Postavljanje početne vrednosti na prazan string
       };
 
-      console.log(user);
-      this.service.addUser(user).subscribe({
-        next: (_: any) => {
+      this.service.addUser(basicUser).subscribe({
+        next: () => {
           console.log("Uspesno");
+          this.authService.logIn(basicUser.user.email, basicUser.user.password);
+          this.router.navigate(['']);
         }
       });
     }

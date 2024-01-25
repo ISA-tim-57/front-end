@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Student1Service } from '../student1.service';
-import { Company } from '../../student3/model/company.model';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Company } from 'src/app/model/company.model';
 
 @Component({
   selector: 'app-company-search',

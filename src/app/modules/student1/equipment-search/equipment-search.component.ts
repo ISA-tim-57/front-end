@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';// Proverite putanju do vašeg Equipment modela
 import { Student1Service } from '../student1.service';
 import { Observable } from 'rxjs';
-import { Equipment } from '../../student3/model/equipment.model';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Equipment } from 'src/app/model/equipment.model';
 
 @Component({
   selector: 'app-equipment-search',
