@@ -2,9 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { JwtToken, createEmptyJwtToken } from './model/token.model';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { User, createEmptyUser } from '../modules/student3/model/user.model';
 import { Router } from '@angular/router';
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Company } from './model/company.model';
-import { Equipment } from './model/equipment.model';
-import { Appointment } from './model/appointment.model';
-import { User } from './model/user.model';
-import { CompanyAdmin } from './model/company-admin.model';
+import { Company } from 'src/app/model/company.model';
+import { Equipment } from 'src/app/model/equipment.model';
+import { Appointment } from 'src/app/model/appointment.model';
+import { CompanyAdmin } from 'src/app/model/company-admin.model';
+import { User } from 'src/app/model/user.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -88,10 +89,18 @@ export class Student3Service {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
-      // Add more headers as needed
     });
     const options = {headers : headers};
     return this.http.get<User>("http://localhost:8080/api/users/" + id, options);
+  }
+
+  getCompanyAdmin(id : number) : Observable<CompanyAdmin> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.get<CompanyAdmin>("http://localhost:8080/api/users/companyadmin/" + id, options);
   }
 
   changePassword(id : number, oldPassword : string, newPassword : string) : Observable<number>{
@@ -105,14 +114,14 @@ export class Student3Service {
     return this.http.put<number>("http://localhost:8080/api/users/changepassword/" + id, changePasswordRequest, options);
   }
 
-  updateCompanyAdmin(id : number, updatedCompanyAdmin : User) : Observable<User>{
+  updateCompanyAdmin(id : number, updatedCompanyAdmin : CompanyAdmin) : Observable<CompanyAdmin>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
       // Add more headers as needed
     });
     const options = {headers : headers};
-    return this.http.put<User>("http://localhost:8080/api/users/updatecompanyadmin/" + id,updatedCompanyAdmin, options);
+    return this.http.put<CompanyAdmin>("http://localhost:8080/api/users/updatecompanyadmin/" + id,updatedCompanyAdmin, options);
   }
 
   updateEquipment(id : number, updatedEquipment : Equipment) : Observable<Equipment>{

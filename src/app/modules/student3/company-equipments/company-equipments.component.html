@@ -13,16 +13,29 @@
       + New equipment
     </button>
   
-    <form [formGroup]="equipmentForm" class="add-form" *ngIf="isFormEnabled">
+    <form [formGroup]="equipmentForm" class="update-equipment-form" *ngIf="isFormEnabled">
       <div class="add-equipment-form">
-        <input type="text" placeholder="Name" formControlName="name" />
-        <input
-          type="text"
-          placeholder="Description"
-          formControlName="description"
-        />
-        <input type="number" placeholder="Price" formControlName="price" />
-        <button type="submit" (click)="addEquipment()" [disabled]="equipmentForm.invalid">Add</button>
+        <div class="update-form-row">
+          <label>Name: </label>
+          <input type="text" placeholder="Name" formControlName="name" />
+        </div>
+        <div class="update-form-row">
+            <label>Description: </label>
+            <input
+                type="text"
+                placeholder="Description"
+                formControlName="description"
+            />
+        </div>
+        <div class="update-form-row">
+            <label>Price: </label>
+            <input type="number" placeholder="Price" formControlName="price" />
+        </div>
+        <div class="update-form-row">
+          <label>Count: </label>
+          <input type="number" placeholder="Count" formControlName="count" />
+      </div>
+        <button type="submit" (click)="addEquipment()" [disabled]="equipmentForm.invalid">Add</button> 
       </div>
     </form>
 
@@ -44,6 +57,10 @@
                 <label>Price: </label>
                 <input type="number" placeholder="Price" formControlName="newPrice" />
             </div>
+            <div class="update-form-row">
+              <label>Count: </label>
+              <input type="number" placeholder="Count" formControlName="newCount" />
+          </div>
           <button type="submit" (click)="saveEquipment()" [disabled]="updateEquipmentForm.invalid">Save</button>
           <button type="submit" (click)="dismiss()">Dismiss</button>
         </div>
@@ -56,6 +73,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Price ($)</th>
+            <th>Count</th>
           </tr>
         </thead>
         <tbody *ngFor="let equipment of equipments">
@@ -63,6 +81,7 @@
             <td>{{ equipment.name }}</td>
             <td>{{ equipment.description }}</td>
             <td>{{ equipment.price }}</td>
+            <td>{{ equipment.count }}</td>
             <td>
                 <button (click)="updateEquipment(equipment)">Edit</button>
                 <button (click)="deleteEquipment(equipment.id)">Delete</button>

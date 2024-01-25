@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Student3Service } from '../student3.service';
-import { Company, createEmptyCompany } from '../model/company.model';
-import { Appointment, createEmptyAppointment } from '../model/appointment.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
-import { User, createEmptyUser } from '../model/user.model';
+import { Company, createEmptyCompany } from 'src/app/model/company.model';
+import { Appointment, createEmptyAppointment } from 'src/app/model/appointment.model';
+import { CompanyAdmin, createEmptyCompanyAdmin } from 'src/app/model/company-admin.model';
+import { User, createEmptyUser } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-create-appointment',
@@ -24,6 +25,7 @@ export class CreateAppointmentComponent {
   appointments : Appointment[] = [];
   companyId : number = 0;
   user : User = createEmptyUser();
+  admin : CompanyAdmin = createEmptyCompanyAdmin();
 
   appointmentForm = new FormGroup({
     selectedDate: new FormControl('',[Validators.required]),
@@ -37,9 +39,15 @@ export class CreateAppointmentComponent {
     let tempuser = this.authService.getUser();
     if(tempuser !== null){
       this.user = tempuser;
-      this.companyId = tempuser.companyId;
-      this.loadAppointments();
-      this.loadCompany();
+      this.service.getCompanyAdmin(this.user.id).subscribe({
+        next : (result : CompanyAdmin) =>{
+          this.admin = result;
+          this.companyId = result.companyId;
+          this.loadAppointments();
+          this.loadCompany();
+        }
+      });
+      
 
     }
     else{
@@ -65,7 +73,7 @@ export class CreateAppointmentComponent {
   }
 
   loadAppointments(){
-    this.service.getAppointmentsForCompany(this.user.companyId).subscribe({
+    this.service.getAppointmentsForCompany(this.companyId).subscribe({
       next : (result) => {
         this.appointments = result;
       }
@@ -76,8 +84,8 @@ export class CreateAppointmentComponent {
     let appointment : Appointment = createEmptyAppointment();
 
     appointment.companyId = this.company.id;
-    appointment.administratorName = "Pera";
-    appointment.administratorSurname = "Peric";
+    appointment.administratorName = this.admin.name;
+    appointment.administratorSurname = this.admin.surname;
     appointment.duration = this.appointmentForm.value.duration || 0;
     appointment.free = true;
     appointment.dateAndTime = new Date(`${this.appointmentForm.value.selectedDate}T${this.appointmentForm.value.selectedTime}`);

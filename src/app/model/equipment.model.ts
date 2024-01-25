@@ -3,6 +3,7 @@ export interface Equipment{
     name : string,
     description : string,
     price : number,
+    count : number,
     companyId : number
 }
 
@@ -11,5 +12,6 @@ export const createEmptyEquipment = (): Equipment => ({
     name: '',
     description: '',
     price : 0,
+    count : 0,
     companyId : 0
   });

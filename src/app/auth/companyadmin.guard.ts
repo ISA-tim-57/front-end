@@ -5,8 +5,8 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { User } from '../modules/student3/model/user.model';
 import { AuthService } from './auth.service';
+import { User } from '../model/user.model';
 
 
 @Injectable({

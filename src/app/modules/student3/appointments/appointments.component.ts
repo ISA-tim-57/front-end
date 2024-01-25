@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Appointment } from '../model/appointment.model';
 import { Student3Service } from '../student3.service';
+import { Appointment } from 'src/app/model/appointment.model';
 
 @Component({
   selector: 'app-appointments',

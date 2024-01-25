@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { Student3Service } from '../student3.service';
-import { Company, createEmptyCompany } from '../model/company.model';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Address } from '../model/address.model';
-import { Appointment, createEmptyAppointment } from '../model/appointment.model';
-import { User, createEmptyUser } from '../model/user.model';
 import { HttpResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
-import { CompanyAdmin } from '../model/company-admin.model';
+import { Company, createEmptyCompany } from 'src/app/model/company.model';
+import { Appointment, createEmptyAppointment } from 'src/app/model/appointment.model';
+import { CompanyAdmin, createEmptyCompanyAdmin } from 'src/app/model/company-admin.model';
+import { User, createEmptyUser } from 'src/app/model/user.model';
+import { Address } from 'src/app/model/address.model';
+
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -24,10 +25,11 @@ export class CompanyAdministratorProfileComponent {
     ){}
 
   company : Company = createEmptyCompany();
-  appointments : Appointment[] = [];
   companyAdmins : CompanyAdmin[] = [];
 
-  admin : User = createEmptyUser();
+  user : User = createEmptyUser();
+  admin : CompanyAdmin = createEmptyCompanyAdmin();
+  
 
   isFormeditable : boolean = false;
   isAdminFormEditable : boolean = false;
@@ -52,21 +54,10 @@ export class CompanyAdministratorProfileComponent {
     zipCode: new FormControl('', [Validators.required]),
   });
 
-  appointmentForm = new FormGroup({
-    selectedDate: new FormControl('',[Validators.required]),
-    selectedTime: new FormControl('',[Validators.required]),
-    duration : new FormControl(0,[Validators.required])
-  })
 
   adminForm = new FormGroup({
     name : new FormControl('',[Validators.required]),
     surname : new FormControl('',[Validators.required]),
-    phone : new FormControl('',[Validators.required]),
-    country: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    number: new FormControl('', [Validators.required]),
-    zipCode: new FormControl('', [Validators.required]),
   });
 
   changePasswordForm = new FormGroup({
@@ -97,10 +88,9 @@ export class CompanyAdministratorProfileComponent {
   ngOnInit() : void{
     let user = this.authService.getUser();
     if(user !== null){
-      this.admin = user;
-      this.companyId = user.companyId;
+      this.user = user;
+      
       this.loadAdmin();
-      this.loadCompany();
 
       this.changePasswordForm.get('newPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
       this.changePasswordForm.get('confirmPassword')?.valueChanges.subscribe(() => this.validateChangePassword());
@@ -140,6 +130,10 @@ export class CompanyAdministratorProfileComponent {
     updatedCompany.rating = this.company.rating;
     updatedCompany.address = updatedAddress;
 
+    updatedCompany.workingHoursStart = this.company.workingHoursStart;
+    updatedCompany.workingHoursEnd = this.company.workingHoursEnd;
+
+
     this.service.updateCompany(this.company.id,updatedCompany).subscribe({
       next: () =>{
         this.loadCompany();
@@ -147,89 +141,19 @@ export class CompanyAdministratorProfileComponent {
     })
   }
 
-  addAppointmentClick(){
-    let appointment : Appointment = createEmptyAppointment();
 
-    appointment.companyId = this.company.id;
-    appointment.administratorName = "Pera";
-    appointment.administratorSurname = "Peric";
-    appointment.duration = this.appointmentForm.value.duration || 0;
-    appointment.free = true;
-    appointment.dateAndTime = new Date(`${this.appointmentForm.value.selectedDate}T${this.appointmentForm.value.selectedTime}`);
-
-    let workingHoursStart = new Date(`1970-01-01T${this.company.workingHoursStart}`);
-    let workingHoursEnd = new Date(`1970-01-01T${this.company.workingHoursEnd}`);
-
-    if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
-      this.isAppointmentCreateErrorVisible = false;
-      this.service.addAppointmentToCompany(appointment).subscribe({
-        next : ()=>{
-          this.loadAppointments();
-          this.cleanAppointmentform();
-        }
-      })
-    }
-    else{
-      this.createAppointmentError();
-    }
-  }
-
-
-  private validateAppointment(workingHoursStart : Date, workingHoursEnd : Date, appointment : Appointment) : boolean{
-
-    const hoursStart = workingHoursStart.getHours();
-    const minutesStart = workingHoursStart.getMinutes();
-
-    const hoursEnd = workingHoursEnd.getHours();
-    const minutesEnd = workingHoursEnd.getMinutes();
-
-    const hoursAppointment = appointment.dateAndTime.getHours();
-    const minutesAppointment = appointment.dateAndTime.getMinutes();
-
-    if(hoursAppointment > hoursStart || (hoursAppointment === hoursStart && minutesAppointment >= minutesStart)){
-      if(minutesAppointment + appointment.duration > 60){
-        let newAppointmentHours = hoursAppointment + Math.floor((minutesAppointment + appointment.duration)/60)
-        let newAppointmentMinutes = (minutesAppointment + appointment.duration) % 60
-        if(newAppointmentHours < hoursEnd || (newAppointmentHours === hoursEnd && newAppointmentMinutes < minutesEnd)){
-          return true;
-        }
-        else{
-          return false;
-        }
-      }
-      else{
-        if(hoursAppointment < hoursEnd || (hoursAppointment === hoursEnd && minutesAppointment < minutesEnd)){
-          return true;
-        }
-        else{
-          return false;
-        }
-      }
-    }
-    else{
-      return false;
-    }
-  }
-
-  private createAppointmentError() : void{
-    this.isAppointmentCreateErrorVisible = true;
-  }
 
   loadAdmin(){
-    this.service.getUser(this.admin.id).subscribe({
-      next : (result) =>{
+    this.service.getCompanyAdmin(this.user.id).subscribe({
+      next : (result : CompanyAdmin) =>{
         this.admin = result;
-
+        this.companyId = result.companyId;
         this.adminForm = new FormGroup({
           name : new FormControl(result.name,[Validators.required]),
           surname : new FormControl(result.surname,[Validators.required]),
-          phone : new FormControl(result.phone,[Validators.required]),
-          country: new FormControl(result.address.country, [Validators.required]),
-          city: new FormControl(result.address.city, [Validators.required]),
-          street: new FormControl(result.address.street, [Validators.required]),
-          number: new FormControl(result.address.number, [Validators.required]),
-          zipCode: new FormControl(result.address.zipCode, [Validators.required]),
         });
+
+        this.loadCompany();
 
         this.adminForm.disable();
         
@@ -252,17 +176,8 @@ export class CompanyAdministratorProfileComponent {
         })
 
         this.companyForm.disable();
-        this.loadAppointments();
         this.loadCompanyAdmins();
         
-      }
-    })
-  }
-
-  loadAppointments(){
-    this.service.getAppointmentsForCompany(this.company.id).subscribe({
-      next : (result) => {
-        this.appointments = result;
       }
     })
   }
@@ -273,23 +188,6 @@ export class CompanyAdministratorProfileComponent {
         this.companyAdmins = result;
       }
     })
-  }
-
-  transformToDate(dateTime : Date) : string{
-    let date = new Date(dateTime)
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-
-    return `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}`;
-  }
-
-  transformToTime(dateTime : Date) : string{
-    let date = new Date(dateTime)
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    
-    return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
   }
 
   selectAdmin(){
@@ -313,31 +211,22 @@ export class CompanyAdministratorProfileComponent {
     this.isAdminFormEditable = false;
     this.adminForm.disable();
 
-    let updatedAddress : Address = {
-      id : this.admin.address.id,
-      country : this.adminForm.value.country || this.admin.address.country,
-      city : this.adminForm.value.city || this.admin.address.city,
-      street : this.adminForm.value.street || this.admin.address.street,
-      number : this.adminForm.value.number || this.admin.address.number,
-      zipCode : this.adminForm.value.zipCode || this.admin.address.zipCode
-    };
+    let tempUser : User = {
+      id : this.user.id,
+      email : this.user.email,
+      username : this.user.username,
+      password : this.user.password,
+      role : this.user.role,
+    }
 
-    let updatedCompanyAdmin : User = {
-      id : this.admin.id,
+    let updatedCompanyAdmin : CompanyAdmin = {
+      user : tempUser,
       name : this.adminForm.value.name || this.admin.name,
       surname : this.adminForm.value.surname || this.admin.surname,
-      email : this.admin.email,
-      phone : this.adminForm.value.phone || this.admin.phone,
-      profession : this.admin.profession,
-      username : this.admin.username,
-      password : this.admin.password,
-      companyInfo : this.admin.companyInfo,
-      address : updatedAddress,
-      role : this.admin.role,
       companyId : this.admin.companyId
     }
 
-    this.service.updateCompanyAdmin(this.admin.id,updatedCompanyAdmin).subscribe({
+    this.service.updateCompanyAdmin(this.user.id,updatedCompanyAdmin).subscribe({
       next : () =>{
         this.loadAdmin();
       }
@@ -356,7 +245,7 @@ export class CompanyAdministratorProfileComponent {
 
   changePassword(){
 
-    this.service.changePassword(this.admin.id,this.changePasswordForm.value.oldPassword || "",this.changePasswordForm.value.newPassword || "").subscribe({
+    this.service.changePassword(this.user.id,this.changePasswordForm.value.oldPassword || "",this.changePasswordForm.value.newPassword || "").subscribe({
       next : (res : number) =>{
         if(res === 0){
           this.passwordError = true;
@@ -370,22 +259,6 @@ export class CompanyAdministratorProfileComponent {
     })
   }
 
-  getCurrentDate() : string{
-    const today = new Date();
-    const todayDay = today.getDate();
-    const todayMonth = today.getMonth() + 1;
-    const todayYear = today.getFullYear();
-    const date = todayYear + "-" + todayMonth + "-" + todayDay;
-    return date;
-  }
-
-  private cleanAppointmentform() : void{
-    this.appointmentForm = new FormGroup({
-      selectedDate: new FormControl('',[Validators.required]),
-      selectedTime: new FormControl('',[Validators.required]),
-      duration : new FormControl(0,[Validators.required])
-    })
-  }
 
   private cleanChangePassword() : void{
     this.changePasswordForm = new FormGroup({

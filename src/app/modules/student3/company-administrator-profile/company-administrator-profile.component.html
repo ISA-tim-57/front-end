@@ -15,56 +15,8 @@
                         <td>Surname:</td>
                         <td><input type="text" formControlName = "surname"/></td>
                     </tr>
-                    <tr>
-                        <td>Phone:</td>
-                        <td><input type="tel" formControlName = "phone"/></td>
-                    </tr>
                 </table>
-                <table>
-                    <fieldset>
-                        <legend>Address</legend>
-                        <tr>
-                            <td>
-                                <label>Country:</label>
-                            </td>
-                            <td>
-                                <input type="text" formControlName = "country"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>City:</label>
-                            </td>
-                            <td>
-                                <input type="text" formControlName = "city"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Street:</label>
-                            </td>
-                            <td>
-                                <input type="text" formControlName = "street"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Number:</label>
-                            </td>
-                            <td>
-                                <input type="text" formControlName = "number"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Zip Code:</label>
-                            </td>
-                            <td>
-                                <input type="text" formControlName = "zipCode"/>
-                            </td>
-                        </tr>
-                    </fieldset>   
-                </table>
+
                 <table>
                     <tr>
                         <td>
@@ -166,46 +118,7 @@
             </form>
     
         </div>
-        <!-- <div class="appointments-container">
-            <h1>Free appointments</h1>
-            <div class="scrollable">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Duration</th>
-                            <th>Administrator name</th>
-                            <th>Administrator surname</th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody *ngFor="let appointment of appointments">
-                        <tr *ngIf="appointment.free">
-                            <td>{{transformToDate(appointment.dateAndTime)}}</td>
-                            <td>{{transformToTime(appointment.dateAndTime)}}</td>
-                            <td>{{appointment.duration}}</td>
-                            <td>{{appointment.administratorName}}</td>
-                            <td>{{appointment.administratorSurname}}</td>
-                        </tr>
-                        
-                    </tbody>
-                    
-                </table>
-            </div>
-            <form [formGroup]="appointmentForm">
-                <h2>Create appointment</h2>
-                <label>Date:</label>
-                <input type="date" [min] = "getCurrentDate()" formControlName = "selectedDate"/>
-                <label>Time:</label>
-                <input type="time" formControlName = "selectedTime"/>
-                <label>Duration:</label>
-                <input type="number" formControlName = "duration"/>
-                <div class="errorMessage" *ngIf="isAppointmentCreateErrorVisible">Collecting equipment will exceed working hours</div>
-                <button type="submit" (click)="addAppointmentClick()">Add</button>
-            </form>
-            
-        </div> -->
+        
         <div class="admins-container" *ngIf="companySelected">
             <h1>Administrators</h1>
             <div>
@@ -221,7 +134,7 @@
                         <tr>
                             <td>{{companyAdmin.name}}</td>
                             <td>{{companyAdmin.surname}}</td>
-                            <td>{{companyAdmin.email}}</td>
+                            <td>{{companyAdmin.user.email}}</td>
                         </tr>
                     </tbody>
                 </table>
