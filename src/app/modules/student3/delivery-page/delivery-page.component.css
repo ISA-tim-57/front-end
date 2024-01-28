@@ -1,0 +1,52 @@
+
+.main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(158, 168, 245);
+    height: 92vh;
+    color: white;
+}
+
+.content-container{
+    justify-self: center;
+    display : flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding-top: 2%;
+}
+
+.header-container{
+    align-self: center;
+    
+}
+
+.header-container h1{
+    font-family: 'Century Gothic';
+    font-variant: small-caps;
+}
+
+.table-container{
+    padding: 1%;
+}
+
+.table-container table{
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.table-container tr{
+    border: 1px solid black;
+
+}
+
+.table-container th,td{
+    border: 1px solid black;
+    padding: 0.5em;
+    text-align: center;
+}
+

@@ -6,6 +6,8 @@ import { Equipment } from 'src/app/model/equipment.model';
 import { Appointment } from 'src/app/model/appointment.model';
 import { CompanyAdmin } from 'src/app/model/company-admin.model';
 import { User } from 'src/app/model/user.model';
+import { PurchaseOrder } from 'src/app/model/purchase-order.model';
+import { EmailRequest } from 'src/app/model/email-request.model';
 
 
 @Injectable({
@@ -152,6 +154,43 @@ export class Student3Service {
     });
     const options = {headers : headers};
     return this.http.get<Equipment[]>("http://localhost:8080/api/equipments/search/" + namePart, options);
+  }
+
+  getPurchaseOrdersForCompanyAdmin(id : number) : Observable<PurchaseOrder[]>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.get<PurchaseOrder[]>("http://localhost:8080/api/purchaseorder/bycompanyadmin/" + id, options);
+  }
+
+  sendMail(request : EmailRequest){
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.post<EmailRequest>('http://localhost:8080/api/mailing/send-email',request, options);
+  }
+
+  markOrderAsCompleted(purchaseOrder : PurchaseOrder) : Observable<PurchaseOrder>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.put<PurchaseOrder>("http://localhost:8080/api/purchaseorder/changestatus/" + purchaseOrder.id , purchaseOrder, options)
+  }
+
+  checkIfAdminIsFree(appointment : Appointment) : Observable<boolean>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.post<boolean>('http://localhost:8080/api/appointments/check-admin-free',appointment, options);
   }
 
   

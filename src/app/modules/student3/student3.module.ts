@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
 import { CompanyEquipmentsComponent } from './company-equipments/company-equipments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
+import { DeliveryPageComponent } from './delivery-page/delivery-page.component';
 
 
 
@@ -17,7 +18,8 @@ import { CreateAppointmentComponent } from './create-appointment/create-appointm
     AppointmentsComponent,
     EquipmentsComponent,
     CompanyAdministratorProfileComponent,
-    CreateAppointmentComponent
+    CreateAppointmentComponent,
+    DeliveryPageComponent
   ],
   imports: [
     CommonModule,

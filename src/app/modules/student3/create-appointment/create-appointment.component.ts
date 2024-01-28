@@ -55,8 +55,8 @@ export class CreateAppointmentComponent {
     }
   }
 
-  transformToDate(dateTime : Date) : string{
-    let date = new Date(dateTime)
+  transformToDate(dateTime : string) : string{
+    let date = new Date(Date.parse(dateTime));
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
@@ -64,8 +64,8 @@ export class CreateAppointmentComponent {
     return `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}`;
   }
 
-  transformToTime(dateTime : Date) : string{
-    let date = new Date(dateTime)
+  transformToTime(dateTime : string) : string{
+    let date = new Date(Date.parse(dateTime));
     var hours = date.getHours();
     var minutes = date.getMinutes();
     
@@ -81,17 +81,21 @@ export class CreateAppointmentComponent {
   }
 
   addAppointmentClick(){
-    let appointment : Appointment = createEmptyAppointment();
-
-    appointment.companyId = this.company.id;
-    appointment.administratorName = this.admin.name;
-    appointment.administratorSurname = this.admin.surname;
-    appointment.duration = this.appointmentForm.value.duration || 0;
-    appointment.free = true;
-    appointment.dateAndTime = new Date(`${this.appointmentForm.value.selectedDate}T${this.appointmentForm.value.selectedTime}`);
+    let appointment : Appointment = {
+      id : 0,
+      companyId : this.company.id,
+      administratorName : this.admin.name,
+      administratorSurname : this.admin.surname,
+      adminUserId : this.user.id,
+      duration : this.appointmentForm.value.duration || 0,
+      free : true,
+      dateAndTime : `${this.appointmentForm.value.selectedDate}T${this.appointmentForm.value.selectedTime}`,
+    }
 
     let workingHoursStart = new Date(`1970-01-01T${this.company.workingHoursStart}`);
     let workingHoursEnd = new Date(`1970-01-01T${this.company.workingHoursEnd}`);
+
+
 
     if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
       this.isAppointmentCreateErrorVisible = false;
@@ -121,14 +125,15 @@ export class CreateAppointmentComponent {
 
   private validateAppointment(workingHoursStart : Date, workingHoursEnd : Date, appointment : Appointment) : boolean{
 
+    let dateAndTime = new Date(Date.parse(appointment.dateAndTime));
     const hoursStart = workingHoursStart.getHours();
     const minutesStart = workingHoursStart.getMinutes();
 
     const hoursEnd = workingHoursEnd.getHours();
     const minutesEnd = workingHoursEnd.getMinutes();
 
-    const hoursAppointment = appointment.dateAndTime.getHours();
-    const minutesAppointment = appointment.dateAndTime.getMinutes();
+    const hoursAppointment = dateAndTime.getHours();
+    const minutesAppointment = dateAndTime.getMinutes();
 
     if(hoursAppointment > hoursStart || (hoursAppointment === hoursStart && minutesAppointment >= minutesStart)){
       if(minutesAppointment + appointment.duration > 60){
@@ -153,6 +158,16 @@ export class CreateAppointmentComponent {
     else{
       return false;
     }
+  }
+
+  checkIfAdminIsFree(appointment : Appointment) : boolean{
+    this.service.checkIfAdminIsFree(appointment).subscribe({
+      next : (result : boolean) =>{
+        console.log(result)
+        return result;
+      } 
+    })
+    return false;
   }
 
   getCurrentDate() : string{

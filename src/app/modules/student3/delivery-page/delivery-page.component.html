@@ -1,0 +1,35 @@
+<div class="main-container">
+    <div class="content-container">
+        <div class="header-container">
+            <h1>Delivery</h1>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Customer email</th>
+                        <th>Appointment</th>
+                        <th>Appointment</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let purchaseOrder of purchaseOrders">
+                    <tr>
+                        <td>{{purchaseOrder.customer.name}} {{purchaseOrder.customer.surname}}</td>
+                        <td>{{purchaseOrder.customer.user.email}}</td>
+                        <td>{{getAppointmentDate(purchaseOrder.appointment.dateAndTime)}}</td>
+                        <td>{{getAppointmentTime(purchaseOrder.appointment.dateAndTime)}}</td>
+                        <td>{{purchaseOrder.appointment.duration}}</td>
+                        <td>
+                            <button (click)="completeOrder(purchaseOrder)">Complete</button>
+                        </td>
+                        <td>
+                            <button>Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -92,4 +92,8 @@ export class NavbarComponent {
     this.router.navigate(['create-appointment']);
   }
 
+  goToDelivery(){
+    this.router.navigate(['delivery']);
+  }
+
 }
