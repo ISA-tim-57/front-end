@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Student3Service } from '../student3.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
 import { Company, createEmptyCompany } from 'src/app/model/company.model';
@@ -13,6 +13,9 @@ import { User, createEmptyUser } from 'src/app/model/user.model';
   templateUrl: './create-appointment.component.html',
   styleUrl: './create-appointment.component.css'
 })
+
+
+
 export class CreateAppointmentComponent {
 
   constructor(
@@ -20,6 +23,13 @@ export class CreateAppointmentComponent {
     private authService : AuthService,
     private router : Router,
   ){}
+
+  integerValidator: ValidatorFn = (control) => {
+    if (control.value % 1 !== 0) {
+      return { integer: true };
+    }
+    return null;
+  };
 
   company : Company = createEmptyCompany();
   appointments : Appointment[] = [];
@@ -30,10 +40,14 @@ export class CreateAppointmentComponent {
   appointmentForm = new FormGroup({
     selectedDate: new FormControl('',[Validators.required]),
     selectedTime: new FormControl('',[Validators.required]),
-    duration : new FormControl(0,[Validators.required])
-  })
+    duration : new FormControl(0,[Validators.required,Validators.min(1.0),this.integerValidator])
+  });
+
+  
 
   isAppointmentCreateErrorVisible : boolean = false;
+  isAdminBusyCreateErrorVisible : boolean = false;
+  isAppointmentInPastErrorVisible : boolean = false;
 
   ngOnInit(){
     let tempuser = this.authService.getUser();
@@ -95,24 +109,47 @@ export class CreateAppointmentComponent {
     let workingHoursStart = new Date(`1970-01-01T${this.company.workingHoursStart}`);
     let workingHoursEnd = new Date(`1970-01-01T${this.company.workingHoursEnd}`);
 
+    if(this.checkIfAppointmentIsInFuture(appointment)){
+      this.isAppointmentInPastErrorVisible = false;
 
+      if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
+        this.isAppointmentCreateErrorVisible = false;
 
-    if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
-      this.isAppointmentCreateErrorVisible = false;
-      this.service.addAppointmentToCompany(appointment).subscribe({
-        next : ()=>{
-          this.loadAppointments();
-          this.cleanAppointmentForm();
-        }
-      })
+        this.service.checkIfAdminIsFree(appointment).subscribe({
+          next : (result : boolean) =>{
+
+            if(result){
+              this.isAdminBusyCreateErrorVisible = false;
+              this.service.addAppointmentToCompany(appointment).subscribe({
+                next : ()=>{
+                  this.loadAppointments();
+                  this.cleanAppointmentForm();
+                }
+              })
+            }else{this.createAdminIsBusyError();}
+          }
+        })
+        
+      }else{this.createAppointmentError();}
+
     }
     else{
-      this.createAppointmentError();
+      this.createAppointmentIsInPastError();
     }
+
+    
   }
 
   private createAppointmentError() : void{
     this.isAppointmentCreateErrorVisible = true;
+  }
+
+  private createAdminIsBusyError() : void{
+    this.isAdminBusyCreateErrorVisible = true;
+  }
+
+  private createAppointmentIsInPastError(){
+    this.isAppointmentInPastErrorVisible = true;
   }
 
   private cleanAppointmentForm() : void{
@@ -160,15 +197,19 @@ export class CreateAppointmentComponent {
     }
   }
 
-  checkIfAdminIsFree(appointment : Appointment) : boolean{
-    this.service.checkIfAdminIsFree(appointment).subscribe({
-      next : (result : boolean) =>{
-        console.log(result)
-        return result;
-      } 
-    })
-    return false;
+  checkIfAppointmentIsInFuture(appointment : Appointment) : boolean{
+    let currentDate = new Date();
+    let targetDate = new Date(Date.parse(appointment.dateAndTime))
+    if(currentDate < targetDate){
+      if(currentDate.getTime() < targetDate.getTime()){
+        return true;
+      }
+      else{return false;}
+    }
+    else{return false;}
   }
+
+
 
   getCurrentDate() : string{
     const today = new Date();
@@ -186,5 +227,22 @@ export class CreateAppointmentComponent {
       }
     })
   }
+
+  sortAppointmentsByDateTime = (appointments: Appointment[]): Appointment[] => {
+      // Sorting appointments based on dateAndTime property
+      appointments.sort((a, b) => {
+          const dateA = new Date(a.dateAndTime);
+          const dateB = new Date(b.dateAndTime);
+          
+          // Compare dates
+          if (dateA < dateB) return -1;
+          if (dateA > dateB) return 1;
+          
+          // If dates are equal, compare time
+          return 0;
+      });
+      
+      return appointments;
+  };
 
 }

@@ -136,24 +136,23 @@ export class Student3Service {
     return this.http.put<Equipment>("http://localhost:8080/api/equipments/" + id, updatedEquipment, options)
   }
 
-  deleteEquipment(id : number) : Observable<void>{
+  deleteEquipment(id : number) : Observable<boolean>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
-      // Add more headers as needed
     });
     const options = {headers : headers};
-    return this.http.delete<void>("http://localhost:8080/api/equipments/" + id, options);
+    return this.http.delete<boolean>("http://localhost:8080/api/equipments/" + id, options);
   }
 
-  searchEquipment(namePart : string) : Observable<Equipment[]>{
+  searchEquipment(namePart : string, companyId : number) : Observable<Equipment[]>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
       // Add more headers as needed
     });
     const options = {headers : headers};
-    return this.http.get<Equipment[]>("http://localhost:8080/api/equipments/search/" + namePart, options);
+    return this.http.get<Equipment[]>("http://localhost:8080/api/equipments/search/" + companyId + "/" + namePart , options);
   }
 
   getPurchaseOrdersForCompanyAdmin(id : number) : Observable<PurchaseOrder[]>{

@@ -89,3 +89,8 @@ th {
     width: 250px;
     background-color: lightgray;
 }
+
+.errorMessage{
+    color: red;
+    margin-left: 20px;
+}

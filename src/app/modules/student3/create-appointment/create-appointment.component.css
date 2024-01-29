@@ -86,6 +86,11 @@ form{
     }
     background-color: black;
     color: white;
+    &:disabled{
+        background-color: gray;
+        cursor: auto;
+        transform: scale(1.0);
+    }
 }
 
 .appointments-container table{

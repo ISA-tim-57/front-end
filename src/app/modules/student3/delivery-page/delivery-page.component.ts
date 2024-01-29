@@ -69,10 +69,10 @@ export class DeliveryPageComponent {
     if(minutes / 10 < 1 && hours / 10 < 1){
       return `0${hours}:0${minutes}`;
     }
-    else if(minutes / 10 < 0){
+    else if(minutes / 10 < 1){
       return `${hours}:0${minutes}`;
     }
-    else if(hours / 10 < 0){
+    else if(hours / 10 < 1){
       return `0${hours}:${minutes}`;
     }
     else{
@@ -82,7 +82,6 @@ export class DeliveryPageComponent {
   }
 
   completeOrder(purchaseOrder : PurchaseOrder){
-    console.log(purchaseOrder);
     this.service.markOrderAsCompleted(purchaseOrder).subscribe({
       next : () =>{
         this.sendMail(purchaseOrder.customer.user.email,purchaseOrder.id);

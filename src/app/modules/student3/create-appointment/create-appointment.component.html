@@ -26,7 +26,9 @@
         </div>
         
         <div class="errorMessage" *ngIf="isAppointmentCreateErrorVisible">Collecting equipment will exceed working hours</div>
-        <button type="submit" (click)="addAppointmentClick()">Create appointment</button>
+        <div class="errorMessage" *ngIf="isAdminBusyCreateErrorVisible">You already have scheduled appointment at this time</div>
+        <div class="errorMessage" *ngIf="isAppointmentInPastErrorVisible">The selected date and time have already passed</div>
+        <button type="submit" (click)="addAppointmentClick()" [disabled]="appointmentForm.invalid">Create appointment</button>
     </form>
     
     <h1>Free appointments</h1>
@@ -42,7 +44,7 @@
                 </tr>
             </thead>
             
-            <tbody *ngFor="let appointment of appointments">
+            <tbody *ngFor="let appointment of sortAppointmentsByDateTime(appointments)">
                 <tr *ngIf="appointment.free">
                     <td>{{transformToDate(appointment.dateAndTime)}}</td>
                     <td>{{transformToTime(appointment.dateAndTime)}}</td>

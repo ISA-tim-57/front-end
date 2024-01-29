@@ -67,6 +67,7 @@
       </form>
   
     <div>
+      <div class="errorMessage" *ngIf="isDeleteErrorVisible">It is not possible to delete the selected equipment because it is part of an order that has not yet been delivered</div>
       <table>
         <thead>
           <tr>
