@@ -8,6 +8,7 @@ import { CompanyAdmin } from 'src/app/model/company-admin.model';
 import { User } from 'src/app/model/user.model';
 import { PurchaseOrder } from 'src/app/model/purchase-order.model';
 import { EmailRequest } from 'src/app/model/email-request.model';
+import { BasicUser } from 'src/app/model/basic-user.model';
 
 
 @Injectable({
@@ -183,13 +184,13 @@ export class Student3Service {
     return this.http.put<PurchaseOrder>("http://localhost:8080/api/purchaseorder/changestatus/" + purchaseOrder.id , purchaseOrder, options)
   }
 
-  checkIfAdminIsFree(appointment : Appointment) : Observable<boolean>{
+  getCustomers(companyId : number) : Observable<BasicUser[]>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
       'Content-Type': 'application/json',
     });
     const options = {headers : headers};
-    return this.http.post<boolean>('http://localhost:8080/api/appointments/check-admin-free',appointment, options);
+    return this.http.get<BasicUser[]>("http://localhost:8080/api/purchaseorder/" + companyId + "/customers", options);
   }
 
   

@@ -86,6 +86,11 @@ export class CreateAppointmentComponent {
     return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
   }
 
+  transformToWord(isFree : boolean) : string{
+    if(isFree) return "Free"
+    else return "Busy"
+  }
+
   loadAppointments(){
     this.service.getAppointmentsForCompany(this.companyId).subscribe({
       next : (result) => {
@@ -109,24 +114,31 @@ export class CreateAppointmentComponent {
     let workingHoursStart = new Date(`1970-01-01T${this.company.workingHoursStart}`);
     let workingHoursEnd = new Date(`1970-01-01T${this.company.workingHoursEnd}`);
 
+    this.isAdminBusyCreateErrorVisible = false;
+    this.isAppointmentCreateErrorVisible = false;
+    this.isAppointmentInPastErrorVisible = false;
+
     if(this.checkIfAppointmentIsInFuture(appointment)){
       this.isAppointmentInPastErrorVisible = false;
 
       if(this.validateAppointment(workingHoursStart,workingHoursEnd,appointment)){
         this.isAppointmentCreateErrorVisible = false;
 
-        this.service.checkIfAdminIsFree(appointment).subscribe({
-          next : (result : boolean) =>{
-
-            if(result){
-              this.isAdminBusyCreateErrorVisible = false;
-              this.service.addAppointmentToCompany(appointment).subscribe({
-                next : ()=>{
-                  this.loadAppointments();
-                  this.cleanAppointmentForm();
-                }
-              })
-            }else{this.createAdminIsBusyError();}
+        this.isAdminBusyCreateErrorVisible = false;
+        this.service.addAppointmentToCompany(appointment).subscribe({
+          next : ()=>{
+            this.loadAppointments();
+            this.cleanAppointmentForm();
+            this.isAdminBusyCreateErrorVisible = false;
+          },
+          error : (error) =>{
+            if(error.status === 409){
+              this.createAdminIsBusyError();
+            }
+            else{
+              console.error('Error creating appointment:', error);
+            }
+            
           }
         })
         

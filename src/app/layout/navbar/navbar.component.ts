@@ -96,4 +96,8 @@ export class NavbarComponent {
     this.router.navigate(['delivery']);
   }
 
+  goToCustomers(){
+    this.router.navigate(['customers'])
+  }
+
 }

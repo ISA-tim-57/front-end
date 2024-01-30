@@ -9,6 +9,7 @@ import { CompanyAdministratorProfileComponent } from './company-administrator-pr
 import { CompanyEquipmentsComponent } from './company-equipments/company-equipments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { DeliveryPageComponent } from './delivery-page/delivery-page.component';
+import { CustomersComponent } from './customers/customers.component';
 
 
 
@@ -19,7 +20,8 @@ import { DeliveryPageComponent } from './delivery-page/delivery-page.component';
     EquipmentsComponent,
     CompanyAdministratorProfileComponent,
     CreateAppointmentComponent,
-    DeliveryPageComponent
+    DeliveryPageComponent,
+    CustomersComponent
   ],
   imports: [
     CommonModule,
