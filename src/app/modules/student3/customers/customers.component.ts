@@ -6,6 +6,7 @@ import { CompanyAdmin, createEmptyCompanyAdmin } from 'src/app/model/company-adm
 import { Router } from '@angular/router';
 import { BasicUser } from 'src/app/model/basic-user.model';
 
+
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
@@ -26,6 +27,7 @@ export class CustomersComponent {
   customers : BasicUser[] = [];
 
   ngOnInit(){
+    
     let tempuser = this.authService.getUser();
     if(tempuser !== null){
       this.user = tempuser;
