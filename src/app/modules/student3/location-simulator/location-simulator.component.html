@@ -1,0 +1,17 @@
+<div>
+    <div>
+        <div class="top">
+            <form [formGroup]="rateForm">
+                Refresh rate(sec)
+                <input type="number" formControlName = "rate"/>
+                <button (click)="setRefreshRate()" [disabled]="rateForm.invalid">Set refresh rate</button>
+            </form>
+            
+        </div>
+        <div>
+            <button (click) = "startSimulation()" *ngIf="!isSimulationStarted">Start simulation</button>
+            <button (click) = "stopSimulation()" *ngIf="isSimulationStarted">Stop simulation</button>
+        </div>
+    </div>
+    <app-map></app-map>
+</div>

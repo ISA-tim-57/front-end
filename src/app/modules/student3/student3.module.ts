@@ -10,6 +10,8 @@ import { CompanyEquipmentsComponent } from './company-equipments/company-equipme
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { DeliveryPageComponent } from './delivery-page/delivery-page.component';
 import { CustomersComponent } from './customers/customers.component';
+import { LocationSimulatorComponent } from './location-simulator/location-simulator.component';
+import { MapComponent } from './map/map.component';
 
 
 
@@ -21,7 +23,9 @@ import { CustomersComponent } from './customers/customers.component';
     CompanyAdministratorProfileComponent,
     CreateAppointmentComponent,
     DeliveryPageComponent,
-    CustomersComponent
+    CustomersComponent,
+    LocationSimulatorComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
