@@ -16,6 +16,10 @@ import { UserGuard } from './auth/user.guard';
 import { CompanyAdminGuard } from './auth/companyadmin.guard';
 import { CompanyEquipmentsComponent } from './modules/student3/company-equipments/company-equipments.component';
 import { CreateAppointmentComponent } from './modules/student3/create-appointment/create-appointment.component';
+import { DeliveryPageComponent } from './modules/student3/delivery-page/delivery-page.component';
+import { CustomersComponent } from './modules/student3/customers/customers.component';
+import { LocationSimulatorComponent } from './modules/student3/location-simulator/location-simulator.component';
+import { MapComponent } from './modules/student3/map/map.component';
 
 
 const routes: Routes = [
@@ -31,6 +35,9 @@ const routes: Routes = [
   {path: 'administratorprofile', component: CompanyAdministratorProfileComponent, canActivate: [CompanyAdminGuard]},
   {path: 'company-equipments', component: CompanyEquipmentsComponent, canActivate: [CompanyAdminGuard]},
   {path: 'create-appointment', component: CreateAppointmentComponent, canActivate: [CompanyAdminGuard]},
+  {path: 'delivery', component: DeliveryPageComponent, canActivate: [CompanyAdminGuard]},
+  {path: 'customers', component: CustomersComponent, canActivate: [CompanyAdminGuard]},
+  {path: 'location-simulator', component: LocationSimulatorComponent},
   { path: '**', redirectTo: '' }
 ];
 

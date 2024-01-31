@@ -37,7 +37,6 @@ export class UserFormComponent {
     surname: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     profession: new FormControl(''),
-    //companyInfo: new FormControl(''),
     country: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
@@ -84,6 +83,7 @@ export class UserFormComponent {
         },
         phone: this.userForm.value.phone || '', // Postavljanje početne vrednosti na prazan string
         profession: this.userForm.value.profession || '', // Postavljanje početne vrednosti na prazan string
+        penalty : 0,
       };
 
       this.service.addUser(basicUser).subscribe({

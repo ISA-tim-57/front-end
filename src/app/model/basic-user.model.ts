@@ -8,6 +8,7 @@ export interface BasicUser{
     address : Address,
     phone : string,
     profession : string,
+    penalty : number,
     
 }
 
@@ -18,5 +19,6 @@ export const createEmptyBasicUser = (): BasicUser => ({
     address: createEmptyAddress(),
     phone: '',
     profession: '',
+    penalty : 0,
 
 });

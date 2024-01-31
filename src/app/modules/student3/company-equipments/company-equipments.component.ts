@@ -37,6 +37,8 @@ export class CompanyEquipmentsComponent {
 
   isUpdateEnabled : boolean = false;
 
+  isDeleteErrorVisible : boolean = false;
+
   
 
   equipmentForm = new FormGroup({
@@ -80,7 +82,7 @@ export class CompanyEquipmentsComponent {
   search(){
     const temp : string = this.searchForm.get('search')?.value || "";
     if(temp !== ""){
-      this.service.searchEquipment(temp).subscribe({
+      this.service.searchEquipment(temp,this.selectedCompanyId).subscribe({
         next : (result) =>{
           this.equipments = result;
         }
@@ -131,8 +133,15 @@ export class CompanyEquipmentsComponent {
   deleteEquipment(id : number){
     if(this.checkIfDeleteIsAllowed(id)){
       this.service.deleteEquipment(id).subscribe({
-        next : () =>{
-          this.loadEquipments();
+        next : (result : boolean) =>{
+          if(result){
+            this.loadEquipments();
+            this.isDeleteErrorVisible = false;
+          }
+          else{
+            this.isDeleteErrorVisible = true;
+          }
+          
         }
       })
     }

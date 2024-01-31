@@ -1,6 +1,18 @@
 .main-container{
     display: flex;
     flex-direction: column;
+    height: 83.5vh;
+    padding: 2%;
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    background-color: rgb(158, 168, 245);
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
 }
 
 .add-form{
@@ -88,4 +100,9 @@ th {
     border: 0px;
     width: 250px;
     background-color: lightgray;
+}
+
+.errorMessage{
+    color: red;
+    margin-left: 20px;
 }

@@ -1,9 +1,9 @@
 <div class="main-container">
+  <div class="content-container">
     <div class="search-container">
-        <form [formGroup]="searchForm">
-            <input type="text" placeholder="Search..." formControlName = "search"/>
-        </form>
-        
+      <form [formGroup]="searchForm">
+          <input type="text" placeholder="Search..." formControlName = "search"/>
+      </form> 
     </div>
     <button
       class="new-equipment"
@@ -12,7 +12,7 @@
     >
       + New equipment
     </button>
-  
+
     <form [formGroup]="equipmentForm" class="update-equipment-form" *ngIf="isFormEnabled">
       <div class="add-equipment-form">
         <div class="update-form-row">
@@ -65,8 +65,9 @@
           <button type="submit" (click)="dismiss()">Dismiss</button>
         </div>
       </form>
-  
+
     <div>
+      <div class="errorMessage" *ngIf="isDeleteErrorVisible">It is not possible to delete the selected equipment because it is part of an order that has not yet been delivered</div>
       <table>
         <thead>
           <tr>
@@ -90,5 +91,7 @@
         </tbody>
       </table>
     </div>
+    </div>
+    
   </div>
   

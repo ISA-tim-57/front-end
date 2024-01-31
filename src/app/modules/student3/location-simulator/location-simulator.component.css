@@ -1,0 +1,14 @@
+.top{
+    padding: 10px;
+}
+
+.top button{
+     &:hover{
+        cursor: pointer;
+     }
+
+    &:disabled{
+        color: gray;
+        cursor: auto;
+    }
+}
