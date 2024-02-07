@@ -92,7 +92,7 @@ export class DeliveryPageComponent {
 
   sendMail(email : string, id : number){
     let request : EmailRequest = {
-      to : 'lukarakin01@gmail.com', //email
+      to : '', //napisati email na koji ce se poslati obavestenje. U teoriji to bi trebao biti mail korisnika, ali najbolje staviti neki svoj mail kako bi proverio  da li poruka uspesno stize
       subject : 'Confirmation of taking over the equipment',
       body : `You have successfully picked up your order marked with id:${id} `,
     }
