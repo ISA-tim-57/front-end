@@ -6,14 +6,12 @@ import { Company } from 'src/app/model/company.model';
 
 @Component({
   selector: 'app-company-search',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule],
   templateUrl: './company-search.component.html',
   styleUrls: ['./company-search.component.css']
 })
 export class CompanySearchComponent implements OnInit {
 
-  allCompanies: Company[] = []; // Dodana varijabla za pohranu svih kompanija
+  allCompanies: Company[] = []; // Variable added to store all companies
   companies: Company[] = [];
   searchName: string = '';
   searchCity: string = '';
@@ -21,15 +19,15 @@ export class CompanySearchComponent implements OnInit {
   constructor(private service: Student1Service) {}
 
   ngOnInit(): void {
-    this.getCompanies(); // Pozivamo getCompanies prilikom inicijalizacije komponente
+    this.getCompanies(); // Call getCompanies during component initialization
   }
 
   getCompanies(): void {
     this.service.getCompanies().subscribe({
       next: (result: Company[]) => {
         console.log(result);
-        this.allCompanies = result; // Pohranjujemo sve kompanije
-        this.companies = result; // Pri prvom dohvaćanju prikazujemo sve kompanije
+        this.allCompanies = result; // Store all companies
+        this.companies = result; // Display all companies initially
       },
       error: (err: any) => {
         console.log(err);
@@ -38,15 +36,15 @@ export class CompanySearchComponent implements OnInit {
   }
 
   searchCompanies(): void {
-    // Provjera ako su oba polja prazna, prikazi sve kompanije
+    // If both fields are empty, show all companies
     if (this.searchName === '' && this.searchCity === '') {
       this.companies = this.allCompanies;
       return;
     }
 
-    // Filtriranje po imenu i gradu ako su polja popunjena
+    // Filter by name and city if fields are filled
     this.companies = this.allCompanies.filter((company: Company) => {
-      // Filtriranje po imenu i gradu
+      // Filter by name and city
       return (
         company.name.toLowerCase().includes(this.searchName.toLowerCase()) &&
         company.address.city.toLowerCase().includes(this.searchCity.toLowerCase())

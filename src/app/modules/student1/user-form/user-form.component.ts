@@ -12,8 +12,6 @@ import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-user-form',
-  standalone: true,
-  imports: [CommonModule,MatInputModule, MatFormFieldModule,ReactiveFormsModule],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })

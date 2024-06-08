@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 import { AuthModule } from './auth/auth.module';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { Student1Module } from './modules/student1/student1.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    Student1Module
   ],
   providers: [],
   bootstrap: [AppComponent]

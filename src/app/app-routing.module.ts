@@ -20,6 +20,7 @@ import { DeliveryPageComponent } from './modules/student3/delivery-page/delivery
 import { CustomersComponent } from './modules/student3/customers/customers.component';
 import { LocationSimulatorComponent } from './modules/student3/location-simulator/location-simulator.component';
 import { MapComponent } from './modules/student3/map/map.component';
+import { UserVComponent } from './modules/student1/user-v/user-v.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path: 'delivery', component: DeliveryPageComponent, canActivate: [CompanyAdminGuard]},
   {path: 'customers', component: CustomersComponent, canActivate: [CompanyAdminGuard]},
   {path: 'location-simulator', component: LocationSimulatorComponent},
+  {path: 'verify/:id', component: UserVComponent},
   { path: '**', redirectTo: '' }
 ];
 

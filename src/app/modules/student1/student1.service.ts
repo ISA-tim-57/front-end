@@ -10,7 +10,21 @@ import { Equipment } from 'src/app/model/equipment.model';
 })
 export class Student1Service {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+
+    
+  }
+
+
+  async verifyUser(id: number): Promise<void> {
+    try {
+      const response = await this.http.put(`http://localhost:8080/api/auth/verification/${id}`, {}).toPromise();
+      console.log('Verification successful:', response);
+    } catch (error) {
+      console.error('Verification failed:', error);
+    }
+  }
+
 
 
   addUser(user : BasicUser): Observable<BasicUser>{
