@@ -8,6 +8,8 @@ import { CompanySearchComponent } from './company-search/company-search.componen
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { UserVComponent } from './user-v/user-v.component'; // Import your component here
 import { UserFormComponent } from './user-form/user-form.component';
+import { UserEquipmentsByCompanyViewComponent } from './user-equipments-by-company-view/user-equipments-by-company-view.component';
+import { UserAppoinmentsByCompanyViewComponent } from './user-appoinments-by-company-view/user-appoinments-by-company-view.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { UserFormComponent } from './user-form/user-form.component';
     CompanySearchComponent,
     EquipmentSearchComponent,
     UserVComponent,
-    UserFormComponent // Ensure your component is declared in the module
+    UserFormComponent,
+    UserEquipmentsByCompanyViewComponent,
+    UserAppoinmentsByCompanyViewComponent // Ensure your component is declared in the module
   ],
   imports: [
     CommonModule,

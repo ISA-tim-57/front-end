@@ -1,0 +1,13 @@
+<div>
+    <h2>User Equipment Orders</h2>
+    <p *ngIf="orderEquipments.length === 0">No orders found for the user.</p>
+    <ul *ngIf="orderEquipments.length > 0">
+      <li *ngFor="let order of orderEquipments">
+        <div>
+          <p><strong>Equipment:</strong> {{ order.equipment.name }}</p>
+          <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  

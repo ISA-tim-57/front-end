@@ -10,24 +10,23 @@ import { Equipment } from 'src/app/model/equipment.model';
   templateUrl: './equipment-search.component.html',
   styleUrls: ['./equipment-search.component.css']
 })
-export class EquipmentSearchComponent implements OnInit {
-
-  allEquipment: Equipment[] = []; // All equipment
+export class EquipmentSearchComponent implements OnInit {allEquipment: Equipment[] = []; // All equipment
   equipments: Equipment[] = []; // Displayed equipment
   searchName: string = '';
+ 
 
   constructor(private service: Student1Service) {}
 
   ngOnInit(): void {
-    this.getEquipments(); // Fetch equipment during component initialization
+    this.getEquipments();
   }
 
   getEquipments(): void {
     this.service.getEquipments().subscribe({
       next: (result: Equipment[]) => {
         console.log(result);
-        this.allEquipment = result; // Store all equipment
-        this.equipments = result; // Initially display all equipment
+        this.allEquipment = result;
+        this.equipments = result;
       },
       error: (err: any) => {
         console.log(err);
@@ -37,7 +36,7 @@ export class EquipmentSearchComponent implements OnInit {
 
   searchEquipment(): void {
     if (this.searchName === '') {
-      this.equipments = this.allEquipment; // If field is empty, display all equipment
+      this.equipments = this.allEquipment;
       return;
     }
 

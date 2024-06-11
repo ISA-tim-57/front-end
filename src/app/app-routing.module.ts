@@ -21,6 +21,8 @@ import { CustomersComponent } from './modules/student3/customers/customers.compo
 import { LocationSimulatorComponent } from './modules/student3/location-simulator/location-simulator.component';
 import { MapComponent } from './modules/student3/map/map.component';
 import { UserVComponent } from './modules/student1/user-v/user-v.component';
+import { UserEquipmentsByCompanyViewComponent } from './modules/student1/user-equipments-by-company-view/user-equipments-by-company-view.component';
+import { UserAppoinmentsByCompanyViewComponent } from './modules/student1/user-appoinments-by-company-view/user-appoinments-by-company-view.component';
 
 
 const routes: Routes = [
@@ -40,6 +42,8 @@ const routes: Routes = [
   {path: 'customers', component: CustomersComponent, canActivate: [CompanyAdminGuard]},
   {path: 'location-simulator', component: LocationSimulatorComponent},
   {path: 'verify/:id', component: UserVComponent},
+  { path: 'equipments/:companyId', component: UserEquipmentsByCompanyViewComponent, canActivate: [UserGuard]}, // Add this line for equipments
+  { path: 'appointments/:companyId', component: UserAppoinmentsByCompanyViewComponent,canActivate: [UserGuard]}, // Add this line for appointments
   { path: '**', redirectTo: '' }
 ];
 
