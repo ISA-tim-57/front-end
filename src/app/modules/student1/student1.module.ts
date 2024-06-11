@@ -10,6 +10,7 @@ import { UserVComponent } from './user-v/user-v.component'; // Import your compo
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserEquipmentsByCompanyViewComponent } from './user-equipments-by-company-view/user-equipments-by-company-view.component';
 import { UserAppoinmentsByCompanyViewComponent } from './user-appoinments-by-company-view/user-appoinments-by-company-view.component';
+import { UserCanceOrderEquipmentComponent } from './user-cance-order-equipment/user-cance-order-equipment.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UserAppoinmentsByCompanyViewComponent } from './user-appoinments-by-com
     UserVComponent,
     UserFormComponent,
     UserEquipmentsByCompanyViewComponent,
-    UserAppoinmentsByCompanyViewComponent // Ensure your component is declared in the module
+    UserAppoinmentsByCompanyViewComponent,
+    UserCanceOrderEquipmentComponent // Ensure your component is declared in the module
   ],
   imports: [
     CommonModule,

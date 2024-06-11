@@ -1,25 +1,29 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { OrderEquipment } from 'src/app/model/order-equipment';
+import { Component, OnInit } from '@angular/core';
 import { Student1Service } from '../student1.service';
+import { PurchaseOrder } from 'src/app/model/purchase-order.model';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/model/user.model';
+
 
 @Component({
   selector: 'app-user-cance-order-equipment',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './user-cance-order-equipment.component.html',
-  styleUrl: './user-cance-order-equipment.component.css'
+  styleUrls: ['./user-cance-order-equipment.component.css']
 })
-export class UserCanceOrderEquipmentComponent {
-  orderEquipments: OrderEquipment[] = [];
+export class UserCanceOrderEquipmentComponent implements OnInit {
+  purchaseOrders: PurchaseOrder[] = [];
 
-  constructor(private student1Service: Student1Service) { }
+  constructor(private student1Service: Student1Service, private authService: AuthService) { }
 
   ngOnInit(): void {
-    const userId = 1; // Replace with the actual user ID
-    this.student1Service.getEquipmentOrderByUserId(userId).subscribe(
-      (data: OrderEquipment[]) => {
-        this.orderEquipments = data;
+    const user: User = this.authService.getUser()!; 
+    const userId = user.id;
+
+    // Replace with the actual user ID
+    this.student1Service.getPurchaseOrderByUserId(userId).subscribe(
+      (data: PurchaseOrder[]) => {
+        this.purchaseOrders = data;
+        console.log(data);
       },
       (error) => {
         console.error('Error fetching equipment orders', error);

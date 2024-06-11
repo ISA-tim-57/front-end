@@ -23,6 +23,7 @@ import { MapComponent } from './modules/student3/map/map.component';
 import { UserVComponent } from './modules/student1/user-v/user-v.component';
 import { UserEquipmentsByCompanyViewComponent } from './modules/student1/user-equipments-by-company-view/user-equipments-by-company-view.component';
 import { UserAppoinmentsByCompanyViewComponent } from './modules/student1/user-appoinments-by-company-view/user-appoinments-by-company-view.component';
+import { UserCanceOrderEquipmentComponent } from './modules/student1/user-cance-order-equipment/user-cance-order-equipment.component';
 
 
 const routes: Routes = [
@@ -43,7 +44,8 @@ const routes: Routes = [
   {path: 'location-simulator', component: LocationSimulatorComponent},
   {path: 'verify/:id', component: UserVComponent},
   { path: 'equipments/:companyId', component: UserEquipmentsByCompanyViewComponent, canActivate: [UserGuard]}, // Add this line for equipments
-  { path: 'appointments/:companyId', component: UserAppoinmentsByCompanyViewComponent,canActivate: [UserGuard]}, // Add this line for appointments
+  { path: 'appointments/:companyId', component: UserAppoinmentsByCompanyViewComponent,canActivate: [UserGuard]},
+  { path: 'ordersCancle', component: UserCanceOrderEquipmentComponent,canActivate: [UserGuard]}, // Add this line for appointments
   { path: '**', redirectTo: '' }
 ];
 

@@ -76,8 +76,13 @@ export class Student1Service {
   }
 
   // New method to get equipment orders by user ID
-  getEquipmentOrderByUserId(userId: number): Observable<OrderEquipment[]> {
-    return this.http.get<OrderEquipment[]>(`http://localhost:8080/api/user/${userId}`);
+  getPurchaseOrderByUserId(userId: number): Observable<PurchaseOrder[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = {headers : headers};
+    return this.http.get<PurchaseOrder[]>(`http://localhost:8080/api/purchaseorder/byuser/${userId}`,options);
   }
 
 

@@ -7,6 +7,7 @@ export interface Appointment{
     duration : number,
     free : boolean,
     companyId : number,
+    companyAdminId: number
 }
 
 export const createEmptyAppointment = (): Appointment=> ({
@@ -17,5 +18,6 @@ export const createEmptyAppointment = (): Appointment=> ({
     dateAndTime : new Date().toISOString(),
     duration : 0,
     free : true,
-    companyId : 0
+    companyId : 0,
+    companyAdminId:0
   });

@@ -103,6 +103,7 @@ export class CreateAppointmentComponent {
     let appointment : Appointment = {
       id : 0,
       companyId : this.company.id,
+      companyAdminId:this.admin.user.id,
       administratorName : this.admin.name,
       administratorSurname : this.admin.surname,
       adminUserId : this.user.id,

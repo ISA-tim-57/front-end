@@ -59,6 +59,7 @@ export class UserAppoinmentsByCompanyViewComponent implements OnInit {
 
     const orderEquipments: OrderEquipment[] = this.selectedEquipments.map(({ equipment, quantity }) => {
       const orderEquipment: OrderEquipment = createEmptyOrderEquipment();
+    
       orderEquipment.equipment = equipment;
       orderEquipment.quantity = quantity; // Set the appropriate quantity
       return orderEquipment;
@@ -67,7 +68,7 @@ export class UserAppoinmentsByCompanyViewComponent implements OnInit {
     this.purchaseOrder.orderEquipments = orderEquipments;
     this.purchaseOrder.status = "ON_HOLD";
     this.purchaseOrder.customer.user.id=user.id;// Ensure customer is set correctly
-    this.purchaseOrder.companyAdmin.user.id=3;
+    this.purchaseOrder.companyAdmin.user.id=appointment.companyAdminId;
     this.service.createPurchaseOrder(this.purchaseOrder).subscribe({
       next: (response: PurchaseOrder) => {
         console.log('Purchase order created successfully:', response);
