@@ -1,5 +1,5 @@
 <div *ngFor="let order of purchaseOrders">
-  <div>
+  <div  (click)="confirmCancel(order)">
     <p>Status: {{ order.status }}</p>
     <p>Customer: {{ order.customer.name }}</p>
     <p>Appointment Date: {{ order.appointment.dateAndTime }}</p>

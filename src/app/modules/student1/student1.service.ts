@@ -86,5 +86,16 @@ export class Student1Service {
   }
 
 
+  cancelPurchaseOrderByUser(userId: number, purchaseOrder: PurchaseOrder): Observable<PurchaseOrder> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json',
+    });
+    const options = { headers: headers };
+    return this.http.put<PurchaseOrder>(`http://localhost:8080/api/purchaseorder/cancel/${userId}`, purchaseOrder, options);
+  }
+
+
+
 
 }

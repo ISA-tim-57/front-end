@@ -30,4 +30,24 @@ export class UserCanceOrderEquipmentComponent implements OnInit {
       }
     );
   }
+
+
+  confirmCancel(order: PurchaseOrder): void {
+    const user: User = this.authService.getUser()!;
+    const userId = user.id;
+
+    if (window.confirm('Do you want to cancel this order?')) {
+      this.student1Service.cancelPurchaseOrderByUser(userId, order).subscribe(
+        (response) => {
+          console.log('Order cancelled successfully', response);
+          this.purchaseOrders = this.purchaseOrders.filter(o => o.id !== order.id); // Remove cancelled order from list
+        },
+        (error) => {
+          console.error('Error cancelling the order', error);
+        }
+      );
+    }
+  }
+
+  
 }
