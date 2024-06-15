@@ -1,0 +1,9 @@
+<div>
+    <h2>Company Admins Report</h2>
+    <ul>
+      <li *ngFor="let admin of companyAdmin" (click)="reportAdmin(admin)">
+        <strong>{{ admin.name }} {{ admin.surname }}</strong> - Company ID: {{ admin.companyId }}
+      </li>
+    </ul>
+  </div>
+  

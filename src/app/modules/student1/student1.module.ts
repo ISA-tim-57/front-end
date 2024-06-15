@@ -11,6 +11,13 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { UserEquipmentsByCompanyViewComponent } from './user-equipments-by-company-view/user-equipments-by-company-view.component';
 import { UserAppoinmentsByCompanyViewComponent } from './user-appoinments-by-company-view/user-appoinments-by-company-view.component';
 import { UserCanceOrderEquipmentComponent } from './user-cance-order-equipment/user-cance-order-equipment.component';
+import { UserCompanyReportComponent } from './user-company-report/user-company-report.component';
+import { UserAdminsReportComponent } from './user-admins-report/user-admins-report.component';
+import { UserCompanyReportReasonComponent } from './user-company-report-reason/user-company-report-reason.component';
+import { UserAdminReportReasonComponent } from './user-admin-report-reason/user-admin-report-reason.component';
+import { UserReportsViewComponent } from './user-reports-view/user-reports-view.component';
+import { SistemAdminReportViewComponent } from './sistem-admin-report-view/sistem-admin-report-view.component';
+import { SistemAdminReportResponseComponent } from './sistem-admin-report-response/sistem-admin-report-response.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +28,15 @@ import { UserCanceOrderEquipmentComponent } from './user-cance-order-equipment/u
     UserFormComponent,
     UserEquipmentsByCompanyViewComponent,
     UserAppoinmentsByCompanyViewComponent,
-    UserCanceOrderEquipmentComponent // Ensure your component is declared in the module
+    UserCanceOrderEquipmentComponent,
+    UserAdminsReportComponent,
+    UserCompanyReportComponent,
+    UserCompanyReportReasonComponent,
+    UserAdminReportReasonComponent,
+    UserReportsViewComponent,
+    SistemAdminReportViewComponent,
+    SistemAdminReportResponseComponent
+     // Ensure your component is declared in the module
   ],
   imports: [
     CommonModule,

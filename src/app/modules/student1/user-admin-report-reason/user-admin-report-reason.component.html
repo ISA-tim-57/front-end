@@ -1,0 +1,9 @@
+<div *ngIf="companyAdmin">
+    <h2>Report {{ companyAdmin.name}}</h2>
+    <form (ngSubmit)="submitReport()">
+      <label for="description">Reason for Reporting:</label>
+      <textarea id="description" [(ngModel)]="report.description" name="description" required></textarea>
+      <button type="submit">Submit Report</button>
+    </form>
+  </div>
+  
