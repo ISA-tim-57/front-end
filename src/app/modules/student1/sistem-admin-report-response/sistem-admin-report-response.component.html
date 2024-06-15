@@ -1,0 +1,19 @@
+<!-- sistem-admin-report-response.component.html -->
+<div>
+    <h2>Respond to Report</h2>
+    <form [formGroup]="reportForm" (ngSubmit)="submitResponse()">
+      <div>
+        <label for="response">Response:</label>
+        <textarea id="response" formControlName="response"></textarea>
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        <select id="status" formControlName="status">
+          <option value="REJECTED">REJECTED</option>
+          <option value="ACCEPTED">ACCEPTED</option>
+        </select>
+      </div>
+      <button type="submit">Submit Response</button>
+    </form>
+  </div>
+  

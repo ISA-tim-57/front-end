@@ -1,0 +1,17 @@
+<div *ngIf="reports.length === 0">
+    No reports to display.
+  </div>
+  <div *ngIf="reports.length > 0">
+    <h2>Reports</h2>
+    <ul>
+      <li *ngFor="let report of reports" (click)="confirmAndNavigate(report)">
+        <h3>Report ID: {{ report.id }}</h3>
+        <p><strong>Description:</strong> {{ report.description }}</p>
+        <p><strong>Response:</strong> {{ report.response }}</p>
+        <p><strong>Sender:</strong> {{ report.sender.name }}</p>
+        <p>  <p><strong>Reported Company:</strong> {{ report.reportedCompany?.name || 'This is not a report for a company' }}</p>
+        <p><strong>Reported Company Admin:</strong> {{ report.reportedCompanyAdmin?.name || 'This is not a report for an admin' }}</p>
+        <p><strong>Status:</strong> {{ report.status }}</p>
+      </li>
+    </ul>
+  </div>

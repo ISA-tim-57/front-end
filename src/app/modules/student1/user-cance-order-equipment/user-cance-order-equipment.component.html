@@ -1,0 +1,13 @@
+<div *ngFor="let order of purchaseOrders">
+  <div  (click)="confirmCancel(order)">
+    <p>Status: {{ order.status }}</p>
+    <p>Customer: {{ order.customer.name }}</p>
+    <p>Appointment Date: {{ order.appointment.dateAndTime }}</p>
+    
+    <!-- Add equipment display here -->
+    <div *ngFor="let equipment of order.orderEquipments">
+      <p>Equipment Name: {{ equipment.equipment.name }}</p>
+      <p>Quantity: {{ equipment.quantity }}</p>
+    </div>
+  </div>
+</div>

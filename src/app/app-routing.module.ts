@@ -20,6 +20,18 @@ import { DeliveryPageComponent } from './modules/student3/delivery-page/delivery
 import { CustomersComponent } from './modules/student3/customers/customers.component';
 import { LocationSimulatorComponent } from './modules/student3/location-simulator/location-simulator.component';
 import { MapComponent } from './modules/student3/map/map.component';
+import { UserVComponent } from './modules/student1/user-v/user-v.component';
+import { UserEquipmentsByCompanyViewComponent } from './modules/student1/user-equipments-by-company-view/user-equipments-by-company-view.component';
+import { UserAppoinmentsByCompanyViewComponent } from './modules/student1/user-appoinments-by-company-view/user-appoinments-by-company-view.component';
+import { UserCanceOrderEquipmentComponent } from './modules/student1/user-cance-order-equipment/user-cance-order-equipment.component';
+import { UserAdminsReportComponent } from './modules/student1/user-admins-report/user-admins-report.component';
+import { UserCompanyReportComponent } from './modules/student1/user-company-report/user-company-report.component';
+import { UserCompanyReportReasonComponent } from './modules/student1/user-company-report-reason/user-company-report-reason.component';
+import { UserAdminReportReasonComponent } from './modules/student1/user-admin-report-reason/user-admin-report-reason.component';
+import { UserReportsViewComponent } from './modules/student1/user-reports-view/user-reports-view.component';
+import { SystemAdminGuard } from './auth/systemadmin.guard';
+import { SistemAdminReportViewComponent } from './modules/student1/sistem-admin-report-view/sistem-admin-report-view.component';
+import { SistemAdminReportResponseComponent } from './modules/student1/sistem-admin-report-response/sistem-admin-report-response.component';
 
 
 const routes: Routes = [
@@ -38,6 +50,17 @@ const routes: Routes = [
   {path: 'delivery', component: DeliveryPageComponent, canActivate: [CompanyAdminGuard]},
   {path: 'customers', component: CustomersComponent, canActivate: [CompanyAdminGuard]},
   {path: 'location-simulator', component: LocationSimulatorComponent},
+  {path: 'verify/:id', component: UserVComponent},
+  { path: 'equipments/:companyId', component: UserEquipmentsByCompanyViewComponent, canActivate: [UserGuard]}, // Add this line for equipments
+  { path: 'appointments/:companyId', component: UserAppoinmentsByCompanyViewComponent,canActivate: [UserGuard]},
+  { path: 'ordersCancle', component: UserCanceOrderEquipmentComponent,canActivate: [UserGuard]}, // Add this line for appointments
+  { path: 'reportAdmin', component: UserAdminsReportComponent,canActivate: [UserGuard]},
+  { path: 'reportCompany', component: UserCompanyReportComponent,canActivate: [UserGuard]},
+  { path: 'report-reason', component: UserCompanyReportReasonComponent,canActivate: [UserGuard] },
+  { path: 'reportAdmin-reason', component:UserAdminReportReasonComponent,canActivate: [UserGuard] },
+  { path: 'reports', component: UserReportsViewComponent,canActivate: [UserGuard]},
+  { path: 'reportsAdmin', component: SistemAdminReportViewComponent,canActivate: [SystemAdminGuard]},
+  { path: 'report-response/:id', component: SistemAdminReportResponseComponent, canActivate: [SystemAdminGuard] },
   { path: '**', redirectTo: '' }
 ];
 

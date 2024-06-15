@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';// Proverite putanju do vašeg Equipment modela
+import { Component, OnInit } from '@angular/core';
 import { Student1Service } from '../student1.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -7,29 +7,26 @@ import { Equipment } from 'src/app/model/equipment.model';
 
 @Component({
   selector: 'app-equipment-search',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule],
   templateUrl: './equipment-search.component.html',
   styleUrls: ['./equipment-search.component.css']
 })
-export class EquipmentSearchComponent implements OnInit {
-
-  allEquipment: Equipment[] = []; // Sva oprema
-  equipments: Equipment[] = []; // Prikazana oprema
+export class EquipmentSearchComponent implements OnInit {allEquipment: Equipment[] = []; // All equipment
+  equipments: Equipment[] = []; // Displayed equipment
   searchName: string = '';
+ 
 
   constructor(private service: Student1Service) {}
 
   ngOnInit(): void {
-    this.getEquipments(); // Dobavljanje opreme prilikom inicijalizacije komponente
+    this.getEquipments();
   }
 
   getEquipments(): void {
     this.service.getEquipments().subscribe({
       next: (result: Equipment[]) => {
         console.log(result);
-        this.allEquipment = result; // Pohranjivanje svih uređaja
-        this.equipments = result; // Na početku prikaži sve uređaje
+        this.allEquipment = result;
+        this.equipments = result;
       },
       error: (err: any) => {
         console.log(err);
@@ -39,7 +36,7 @@ export class EquipmentSearchComponent implements OnInit {
 
   searchEquipment(): void {
     if (this.searchName === '') {
-      this.equipments = this.allEquipment; // Ako je polje prazno, prikaži sve uređaje
+      this.equipments = this.allEquipment;
       return;
     }
 

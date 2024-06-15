@@ -1,0 +1,11 @@
+<div>
+    <h2>User Company Report</h2>
+    <div *ngFor="let comp of company" (click)="reportCompany(comp)">
+      <h3>{{ comp.name }}</h3>
+      <p><strong>Description:</strong> {{ comp.description }}</p>
+      <p><strong>Address:</strong> {{ comp.address.street }}, {{ comp.address.city }}, {{ comp.address.zipCode }}</p>
+      <p><strong>Rating:</strong> {{ comp.rating }}</p>
+      <p><strong>Working Hours:</strong> {{ comp.workingHoursStart | date:'shortTime' }} - {{ comp.workingHoursEnd | date:'shortTime' }}</p>
+    </div>
+  </div>
+  

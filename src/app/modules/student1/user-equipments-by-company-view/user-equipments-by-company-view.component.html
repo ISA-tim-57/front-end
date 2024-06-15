@@ -1,0 +1,28 @@
+<div>
+  <div style="margin-bottom: 20px;">
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="searchName" placeholder="Search by name">
+    <button (click)="searchEquipment()">Search</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of equipments">
+        <td>{{ e.name }}</td>
+        <td>{{ e.description }}</td>
+        <td>{{ e.price }}</td>
+        
+        <td><button (click)="onSelectEquipment(e)">Add to List</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="proceedToAppointments()">Proceed to Appointments</button>
+</div>
